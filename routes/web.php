@@ -12,3 +12,9 @@
 */
 
 Route::get('/', 'ClientController@getIndex');
+
+
+Route::get('admin/login', 'AdminController@getLogin');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/index', 'AdminController@getIndex');
+});
