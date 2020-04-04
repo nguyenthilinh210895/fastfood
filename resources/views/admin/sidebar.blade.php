@@ -29,6 +29,12 @@
 		</a>
 	</li>
 	<li class="nav-item">
+		<a class="nav-link" href="/admin/product/list">
+			<i class="fas fa-hamburger"></i>
+			<span>Quản Lý Sản Phẩm</span>
+		</a>
+	</li>
+	<li class="nav-item">
 		<a class="nav-link" href="tables.html">
 			<i class="fas fa-fw fa-table"></i>
 			<span>Tables</span>

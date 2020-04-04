@@ -19,6 +19,7 @@ Route::post('admin/login', 'AdminController@postLogin');
 Route::middleware(['adminLogin'])->group(function () {
 	Route::group(['prefix' => 'admin'], function () {
 		Route::get('/index', 'AdminController@getIndex');
+
     // manage staff
 		Route::get('/staff/list', 'AdminController@getListStaff');
 		Route::get('/staff/add', 'AdminController@getAddStaff');
@@ -26,5 +27,12 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/staff/edit/{id}', 'AdminController@getEditStaff');
 		Route::post('/staff/edit/{id}', 'AdminController@postEditStaff');
 		Route::get('/staff/delete/{id}', 'AdminController@getDeleteStaff');
+
+	//manage product
+		Route::get('/product/list', 'AdminController@getListProduct');
+		Route::post('/category/add', 'AdminController@postAddCategory');
+		Route::get('/category/delete/{id}', 'AdminController@getDeleteCategory');
+		Route::post('/product/add', 'AdminController@getAddProduct');
+		Route::get('/product/delete/{id}', 'AdminController@getDeleteProduct');
 	});
 });

@@ -21,7 +21,7 @@ class CreateTableOrderTable extends Migration
             $table->integer('status')->nullable();
             $table->integer('type_order')->comment('1: online; 2:offline ');
             $table->integer('id_table')->nullable();
-            $table->integer('delete_flag');
+            $table->integer('delete_flag')->default(0)->comment("0: Chưa Xóa; 1: đã xóa");
 
             $table->integer('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('customer')->onDelete('cascade');

@@ -66,10 +66,10 @@
 								@endif
 							</td>
 							<td>
-								<a href="/admin/staff/edit/{{$st->id}}" title="Edit Nhân Viên">
+								<a class="btn btn-primary" href="/admin/staff/edit/{{$st->id}}" title="Edit Nhân Viên">
 									<i class="fas fa-edit"></i>
-								</a>|
-								<a href="/admin/staff/delete/{{$st->id}}" class="delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')" title="Xóa Nhân Viên">
+								</a>
+								<a href="/admin/staff/delete/{{$st->id}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')" title="Xóa Nhân Viên">
 									<i class="fas fa-trash-alt"></i>
 								</a>
 							</td>

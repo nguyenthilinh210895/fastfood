@@ -21,6 +21,7 @@ class CreateTableProductTable extends Migration
             $table->float('promotion_price', 16)->nullable();
             $table->integer('unit');
             $table->text('description');
+            $table->integer('delete_flag')->default(0)->comment("0: Chưa Xóa; 1: đã xóa");
 
             $table->integer('id_category')->unsigned();
             $table->foreign('id_category')->references('id')->on('category')->onDelete('cascade');

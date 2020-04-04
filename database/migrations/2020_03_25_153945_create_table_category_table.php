@@ -17,7 +17,7 @@ class CreateTableCategoryTable extends Migration
             $table->increments('id');
             $table->string("name");
             $table->string("type");
-            $table->integer("delete_flag");
+            $table->integer('delete_flag')->default(0)->comment("0: Chưa Xóa; 1: đã xóa");
             $table->timestamps();
         });
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use App\Category;
+use App\Product;
 
 class AdminController extends Controller
 {
@@ -130,4 +132,64 @@ class AdminController extends Controller
 		return redirect()->back()->with('message', 'Xóa Thành Công');
 	}
 
+	//list product
+	public function getListProduct(){
+		$category = Category::where('delete_flag', 0)->get();
+        $product = Product::where('delete_flag', 0)->get();
+        return view('admin.product.list', compact('category', 'product'));
+	}
+
+	// add category
+	public function postAddCategory(Request $req){
+		$category = new Category();
+		$category->name = $req->name;
+		$category->type = $req->type;
+		$category->save();
+		return redirect()->back()->with('message', ' Thêm Loại Hàng Thành Công');
+	}
+
+	public function getDeleteCategory($id){
+    	$category = Category::where('id', $id)->first();
+    	$category->delete_flag = 1;
+    	$category->save();
+    	return redirect()->back()->with('message', 'Đã Xóa');
+    }
+
+    // add product
+	public function getAddProduct(Request $req){
+		$product = new Product();
+		$product->product_name = $req->product_name;
+		$product->id_category = $req->id_category;
+		$product->unit_price = $req->unit_price;
+		if($req->promotion_price != null){
+			$product->promotion_price = $req->promotion_price;
+		}
+		if($req->hasFile('image')){
+			$file = $req->file('image');
+			$duoi = $file->getClientOriginalExtension();
+			if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg')
+			{
+				return redirect()->back()->with('message', 'File ảnh không đúng định dạng');
+			}
+			$name = $file->getClientOriginalName();
+			$image = str_random(5)."_".$name;
+			while(file_exists("img/".$image))
+			{   
+				$image = str_random(5)."_".$name;
+			}
+			$file->move('img/', $image);    
+			$product->image = $image;
+		}
+		$product->unit = $req->unit;
+		$product->description = $req->description;
+		$product->save();
+		return redirect()->back()->with('message', ' Thêm Sản Phẩm Thành Công');
+	}
+
+	public function getDeleteProduct($id){
+    	$product = Product::where('id', $id)->first();
+    	$product->delete_flag = 1;
+    	$product->save();
+    	return redirect()->back()->with('message', 'Đã Xóa');
+    }
 }

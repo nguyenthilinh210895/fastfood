@@ -17,6 +17,8 @@ class CreateTableCommentTable extends Migration
             $table->increments('id');
             $table->string('content');
             $table->integer('rate')->nullable();
+            $table->integer('delete_flag')->default(0)->comment("0: Chưa Xóa; 1: đã xóa");
+            
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
 
