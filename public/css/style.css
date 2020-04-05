@@ -1,0 +1,10 @@
+.search_form input{
+	color: #333;
+}
+
+.price-line{
+	text-decoration: line-through;
+}
+.pro-price{
+	color: red;
+}

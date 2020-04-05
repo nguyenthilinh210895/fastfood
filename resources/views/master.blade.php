@@ -16,6 +16,7 @@
 	<!-- global styles -->
 	<link href="shopper/themes/css/flexslider.css" rel="stylesheet"/>
 	<link href="shopper/themes/css/main.css" rel="stylesheet"/>
+	<link href="css/style.css" rel="stylesheet"/>
 
 	<!-- scripts -->
 	<script src="shopper/themes/js/jquery-1.7.2.min.js"></script>
