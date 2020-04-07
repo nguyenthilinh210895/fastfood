@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
+	<link href="admintemplate/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<!-- bootstrap -->
 	<link href="shopper/bootstrap/css/bootstrap.min.css" rel="stylesheet">      
 	<link href="shopper/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">

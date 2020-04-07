@@ -36,3 +36,10 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/product/delete/{id}', 'AdminController@getDeleteProduct');
 	});
 });
+
+// Client
+Route::get('/login', 'ClientController@getLogin');
+Route::post('/login', 'ClientController@postLogin');
+Route::post('/register', 'ClientController@postRegister');
+Route::get('/logout', 'ClientController@getLogout');
+Route::get('/product-detail/{id}', 'ClientController@getProductDetails');

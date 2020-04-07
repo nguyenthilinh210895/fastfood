@@ -40,11 +40,11 @@
 									<div class="product-box">
 										<span class="sale_tag"></span>
 										<p>
-											<a href="product_detail.html">
+											<a href="product-detail/{{$f->id}}">
 												<img src="img/{{$f->image}}" alt="" />
 											</a>
 										</p>
-										<a href="product_detail.html" class="title">{{$f->product_name}}</a><br/>
+										<a href="product-detail/{{$f->id}}" class="title">{{$f->product_name}}</a><br/>
 										<a href="products.html" class="category">{{$f->name}}</a>
 										@if($f->promotion_price != null)
 										<p class="price">
@@ -60,6 +60,7 @@
 											{{number_format($f->unit_price)}} VNĐ
 										</p>
 										@endif
+										<a href="" class="btn btn-primary">Add Cart <i class="fas fa-cart-plus"></i></a>
 									</div>
 								</li>
 								@endforeach
@@ -83,11 +84,11 @@
 									<div class="product-box">
 										<span class="sale_tag"></span>
 										<p>
-											<a href="product_detail.html">
+											<a href="product-detail/{{$d->id}}">
 												<img src="img/{{$d->image}}" alt="" />
 											</a>
 										</p>
-										<a href="product_detail.html" class="title">{{$d->product_name}}</a><br/>
+										<a href="product-detail/{{$d->id}}" class="title">{{$d->product_name}}</a><br/>
 										<a href="products.html" class="category">{{$d->name}}</a>
 										@if($d->promotion_price != null)
 										<p class="price">
