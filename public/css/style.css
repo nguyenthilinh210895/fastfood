@@ -8,3 +8,7 @@
 .pro-price{
 	color: red;
 }
+
+.product-box img{
+	height: 180px;
+}

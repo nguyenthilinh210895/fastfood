@@ -113,7 +113,7 @@
 								@foreach($product as $p)
 								<tr>
 									<td>{{++$i}}</td>
-									<td>{{$p->name}}</td>
+									<td>{{$p->product_name}}</td>
 									<td><a href="img/{{$p->image}}"><img src="img/{{$p->image}}" width="50" height="50"></a></td>
 									<td>{{number_format($p->unit_price)}}</td>
 									<td>{{number_format($p->promotion_price)}}</td>

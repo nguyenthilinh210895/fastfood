@@ -34,6 +34,13 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/category/delete/{id}', 'AdminController@getDeleteCategory');
 		Route::post('/product/add', 'AdminController@getAddProduct');
 		Route::get('/product/delete/{id}', 'AdminController@getDeleteProduct');
+
+	// manage table
+		Route::get('/table/list', 'AdminController@getListTable');
+		Route::post('/table/add', 'AdminController@getAddTable');
+		Route::get('/table/delete/{id}', 'AdminController@getDeleteTable');
+		Route::get('/table/on/{id}', 'AdminController@getOnTable');
+		Route::get('/table/off/{id}', 'AdminController@getOffTable');
 	});
 });
 
@@ -43,3 +50,13 @@ Route::post('/login', 'ClientController@postLogin');
 Route::post('/register', 'ClientController@postRegister');
 Route::get('/logout', 'ClientController@getLogout');
 Route::get('/product-detail/{id}', 'ClientController@getProductDetails');
+Route::post('/comment/{id}', 'ClientController@postComment');
+// cart
+Route::get('add-to-cart/{id}', [
+	'as'=>'addcart',
+	'uses'=>'ClientController@getAddtoCart'
+]);
+Route::get('del-cart/{id}', [
+	'as'=>'delete-cart',
+	'uses'=>'ClientController@getDelItemCart'
+]);

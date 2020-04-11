@@ -30,20 +30,20 @@ class Cart
 		// $this->totalPrice += $item->unit_price;
 
 		$price = 0;
-		if($item->promotion_price > 0){
+		if($item->promotion_price != null){
 			$price = $item->promotion_price;
 		}else{
 			$price = $item->unit_price;
 		}
-		$giohang = ['qty'=>0, 'price' => $price, 'item' => $item];
+		$cart = ['qty'=>0, 'price' => $price, 'item' => $item];
 		if($this->items){
 			if(array_key_exists($id, $this->items)){
-				$giohang = $this->items[$id];
+				$cart = $this->items[$id];
 			}
 		}
-		$giohang['qty']++;
-		$giohang['price'] = $price * $giohang['qty'];
-		$this->items[$id] = $giohang;
+		$cart['qty']++;
+		$cart['price'] = $price * $cart['qty'];
+		$this->items[$id] = $cart;
 		$this->totalQty++;
 		$this->totalPrice += $price;
 	}

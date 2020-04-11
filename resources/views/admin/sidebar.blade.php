@@ -35,9 +35,9 @@
 		</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="tables.html">
+		<a class="nav-link" href="/admin/table/list">
 			<i class="fas fa-fw fa-table"></i>
-			<span>Tables</span>
+			<span>Quản lý bàn</span>
 		</a>
 	</li>
 </ul>

@@ -7,6 +7,7 @@ use Auth;
 use App\User;
 use App\Category;
 use App\Product;
+use App\Table;
 
 class AdminController extends Controller
 {
@@ -191,5 +192,43 @@ class AdminController extends Controller
     	$product->delete_flag = 1;
     	$product->save();
     	return redirect()->back()->with('message', 'Đã Xóa');
+    }
+
+    //list table
+    public function getListTable(){
+    	$table = Table::where('delete_flag', 0)->get();
+    	return view('admin.table.list', compact('table'));
+    }
+
+    // add product
+	public function getAddTable(Request $req){
+		$table = new Table();
+		$table->table_name = $req->table_name;
+		$table->code = $req->code;
+		$table->status = 0;
+		$table->delete_flag = 0;
+		$table->save();
+		return redirect()->back()->with('message', ' Thêm Thành Công');
+	}
+
+	public function getDeleteTable($id){
+    	$table = Table::where('id', $id)->first();
+    	$table->delete_flag = 1;
+    	$table->save();
+    	return redirect()->back()->with('message', 'Đã Xóa');
+    }
+
+    public function getOnTable($id){
+    	$table = Table::where('id', $id)->first();
+    	$table->status = 1;
+    	$table->save();
+    	return redirect()->back()->with('message', 'Đã đặt');
+    }
+
+    public function getOffTable($id){
+    	$table = Table::where('id', $id)->first();
+    	$table->status = 0;
+    	$table->save();
+    	return redirect()->back()->with('message', 'Đã hủy');
     }
 }

@@ -61,7 +61,7 @@
 							<td>
 								@if($st->role == 1)
 								<span class="badge badge-danger">Admin</span>
-								@else if($st->role == 2)
+								@else
 								<span class="badge badge-primary">Nhân Viên</span>
 								@endif
 							</td>

@@ -58,18 +58,43 @@
 							{!! $product->description !!}
 						</div>
 						<div class="tab-pane" id="profile">
-							<table class="table table-striped shop_attributes">	
-								<tbody>
-									<tr class="">
-										<th>Size</th>
-										<td>Large, Medium, Small, X-Large</td>
-									</tr>		
-									<tr class="alt">
-										<th>Colour</th>
-										<td>Orange, Yellow</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="discussion">
+								<div class="col-xs-12 col-sm-12 col-md-6">
+									@if(session('message'))
+									<span class="alert alert-success">{{session('message')}}</span>
+									@endif
+									<h4>Bình luận</h4>
+									<!-- .questions -->
+									@if(Auth::check())
+									<div>
+										<form action="comment/{{$product->id}}" role="form" method="post">
+											{!!csrf_field()!!}
+											<div class="form-group">
+												<textarea class="form-control" style="width: 500px" rows="2" name="content"></textarea>
+											</div>
+											<button type="submit" class="btn btn-primary">Gửi</button>
+										</form>
+									</div>
+									@endif
+									<!-- .questions -->
+									<!-- .discussion-comment -->
+									<div class="discussion-comment" style="height: 100px; overflow: scroll;">
+										<ul>
+											@foreach($comment as $cm)
+											<li>
+												<div class="comment-text1">
+													<div class="text">
+														<strong>{{$cm->user->name}}</strong> <small>{{$cm->created_at}}</small>
+														<p>{{$cm->content}}</p>	
+													</div>
+												</div>
+											</li>
+											@endforeach	
+										</ul>
+									</div>
+									<!-- /.discussion-comment -->
+								</div>
+							</div>
 						</div>
 					</div>							
 				</div>						
