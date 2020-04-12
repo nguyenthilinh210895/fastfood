@@ -145,7 +145,7 @@
 				<ul class="nav nav-list">
 					<li class="nav-header">MENU Món</li>
 					@foreach($category as $c)
-					<li><a href="products.html">{{$c->name}}</a></li>
+					<li><a href="/product/{{$c->id}}">{{$c->name}}</a></li>
 					@endforeach
 				</ul>
 				<br/>

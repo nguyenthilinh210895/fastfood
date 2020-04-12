@@ -69,7 +69,7 @@
 									</td>
 									<td>
 										<div class="btn-group" role="group">
-											<a href="/admin/table/delete/{{$t->id}}" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+											<a href="/admin/table/edit/{{$t->id}}" title="Sửa" class="btn btn-xs btn-danger"><i class="fas fa-edit"></i></a>
 											<a href="/admin/table/on/{{$t->id}}" title="Book" class="btn btn-xs btn-primary"><i class="fas fa-check"></i></a>
 											<a href="/admin/table/off/{{$t->id}}" title="Cancel" class="btn btn-xs btn-success"><i class="fas fa-window-close"></i></a>
 										</div>

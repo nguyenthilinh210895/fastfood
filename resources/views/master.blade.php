@@ -24,6 +24,7 @@
 	<script src="shopper/bootstrap/js/bootstrap.min.js"></script>				
 	<script src="shopper/themes/js/superfish.js"></script>	
 	<script src="shopper/themes/js/jquery.scrolltotop.js"></script>
+	<script src="/js/fastfood.js"></script>
 		<!--[if lt IE 9]>			
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 			<script src="js/respond.min.js"></script>

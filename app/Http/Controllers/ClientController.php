@@ -99,7 +99,7 @@ class ClientController extends Controller
 		$product = Product::where('id', $id)->first();
 		$relate_product = Product::where('id_category', $product->id_category)
 								->where('delete_flag', 0)->paginate(4);
-		$category = Category::orderBy('created_at', 'desc')->take(10)->get();
+		$category = Category::orderBy('created_at', 'desc')->take(20)->get();
 		$comment = Comment::where('id_product', $id)
 							->where('delete_flag', 0)
 							->get();
@@ -142,4 +142,25 @@ class ClientController extends Controller
         return redirect()->back();
     }
 
+    //checkout
+    public function getCart(){
+    	$category = Category::orderBy('created_at', 'desc')->take(10)->get();
+    	return view('client.cart', compact('category'));
+    }
+
+    //search product
+    public function getsearchProduct(Request $req){
+    	$product = Product::where('product_name', 'LIKE', '%' .$req->key. '%')->paginate(6);
+        $key = $req->key;
+        $category = Category::orderBy('created_at', 'desc')->take(20)->get();
+        return  view('client.product.search', compact('product', 'key', 'category'));
+    }
+
+    // product by category
+    public function getProductByCategory($id){
+    	$product = Product::where('id_category', $id)->paginate(6);
+    	$category = Category::orderBy('created_at', 'desc')->take(20)->get();
+    	$key = Category::where('id', $id)->first();
+        return  view('client.product.product-by-category', compact('product', 'key', 'category'));
+    }
 }

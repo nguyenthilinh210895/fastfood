@@ -53,7 +53,8 @@ class AdminController extends Controller
 
     // list staff
 	public function getListStaff(){
-		$staff = User::where('delete_flag', 0)->get();
+		$staff = User::where('delete_flag', 0)
+		->where('role', '<>', 0)->get();		
 		return view('admin.staff.list', compact('staff'));
 	}
 
@@ -90,6 +91,8 @@ class AdminController extends Controller
 			$staff->salary = $req->salary;
 			$staff->avatar = "avatar.png";
 			$staff->role = $req->role;
+			$staff->start_in = $req->start_in;
+			$staff->start_out = $req->start_out;
 			$staff->save();
 			return redirect()->back()->with('message', 'Thêm thành công.');
 		} catch (Exception $e) {
@@ -116,6 +119,8 @@ class AdminController extends Controller
 			}
 			$staff->phone = $req->phone;
 			$staff->address = $req->address;
+			$staff->start_in = $req->start_in;
+			$staff->start_out = $req->start_out;
 			$staff->salary = $req->salary;
 			$staff->role = $req->role;
 			$staff->save();
@@ -136,8 +141,8 @@ class AdminController extends Controller
 	//list product
 	public function getListProduct(){
 		$category = Category::where('delete_flag', 0)->get();
-        $product = Product::where('delete_flag', 0)->get();
-        return view('admin.product.list', compact('category', 'product'));
+		$product = Product::where('delete_flag', 0)->get();
+		return view('admin.product.list', compact('category', 'product'));
 	}
 
 	// add category
@@ -150,11 +155,11 @@ class AdminController extends Controller
 	}
 
 	public function getDeleteCategory($id){
-    	$category = Category::where('id', $id)->first();
-    	$category->delete_flag = 1;
-    	$category->save();
-    	return redirect()->back()->with('message', 'Đã Xóa');
-    }
+		$category = Category::where('id', $id)->first();
+		$category->delete_flag = 1;
+		$category->save();
+		return redirect()->back()->with('message', 'Đã Xóa');
+	}
 
     // add product
 	public function getAddProduct(Request $req){
@@ -188,17 +193,57 @@ class AdminController extends Controller
 	}
 
 	public function getDeleteProduct($id){
-    	$product = Product::where('id', $id)->first();
-    	$product->delete_flag = 1;
-    	$product->save();
-    	return redirect()->back()->with('message', 'Đã Xóa');
-    }
+		$product = Product::where('id', $id)->first();
+		$product->delete_flag = 1;
+		$product->save();
+		return redirect()->back()->with('message', 'Đã Xóa');
+	}
+
+    //edit staff 
+	public function getEditProduct($id){
+		$category = Category::where('delete_flag', 0)->get();
+		$product = Product::where('id', $id)->first();
+		return view('admin.product.edit', compact('product', 'category'));
+	}
+
+	public function postEditProduct($id, Request $req){
+		$product = Product::find($id);
+		$product->product_name = $req->product_name;
+		$product->id_category = $req->id_category;
+		$product->unit_price = $req->unit_price;
+		if($req->promotion_price != null){
+			$product->promotion_price = $req->promotion_price;
+		}
+		if($req->hasFile('image')){
+			$file = $req->file('image');
+			$duoi = $file->getClientOriginalExtension();
+			if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg')
+			{
+				return redirect()->back()->with('message', 'File ảnh không đúng định dạng');
+			}
+			$name = $file->getClientOriginalName();
+			$image = str_random(5)."_".$name;
+			while(file_exists("img/".$image))
+			{   
+				$image = str_random(5)."_".$name;
+			}
+			$file->move('img/', $image);    
+			$product->image = $image;
+		}
+		else{
+			$product->image = $product->image;
+		}
+		$product->unit = $req->unit;
+		$product->description = $req->description;
+		$product->save();
+		return redirect()->back()->with('message', ' Cập nhật Thành Công');
+	}
 
     //list table
-    public function getListTable(){
-    	$table = Table::where('delete_flag', 0)->get();
-    	return view('admin.table.list', compact('table'));
-    }
+	public function getListTable(){
+		$table = Table::where('delete_flag', 0)->get();
+		return view('admin.table.list', compact('table'));
+	}
 
     // add product
 	public function getAddTable(Request $req){
@@ -212,23 +257,39 @@ class AdminController extends Controller
 	}
 
 	public function getDeleteTable($id){
-    	$table = Table::where('id', $id)->first();
-    	$table->delete_flag = 1;
-    	$table->save();
-    	return redirect()->back()->with('message', 'Đã Xóa');
-    }
+		$table = Table::where('id', $id)->first();
+		$table->delete_flag = 1;
+		$table->save();
+		return redirect('/admin/table/list')->with('message', 'Đã Xóa');
+	}
 
-    public function getOnTable($id){
-    	$table = Table::where('id', $id)->first();
-    	$table->status = 1;
-    	$table->save();
-    	return redirect()->back()->with('message', 'Đã đặt');
-    }
+	public function getOnTable($id){
+		$table = Table::where('id', $id)->first();
+		$table->status = 1;
+		$table->save();
+		return redirect()->back()->with('message', 'Đã đặt');
+	}
 
-    public function getOffTable($id){
-    	$table = Table::where('id', $id)->first();
-    	$table->status = 0;
-    	$table->save();
-    	return redirect()->back()->with('message', 'Đã hủy');
-    }
+	public function getOffTable($id){
+		$table = Table::where('id', $id)->first();
+		$table->status = 0;
+		$table->save();
+		return redirect()->back()->with('message', 'Đã hủy');
+	}
+
+	//edit table 
+	public function getEditTable($id){
+		$table = Table::where('id', $id)->first();
+		return view('admin.table.edit', compact('table'));
+	}
+
+	public function postEditTable($id, Request $req){
+		$table = Table::where('id', $id)->first();
+		$table->table_name = $req->table_name;
+		$table->code = $req->code;
+		$table->status = 0;
+		$table->delete_flag = 0;
+		$table->save();
+		return redirect('/admin/table/list')->with('message', 'Sửa thành công.');
+	}
 }

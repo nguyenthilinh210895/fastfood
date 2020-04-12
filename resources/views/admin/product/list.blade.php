@@ -123,6 +123,9 @@
 									<td>
 										<div class="btn-group" role="group">
 											<a href="/admin/product/delete/{{$p->id}}" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+											<a class="btn btn-primary" href="/admin/product/edit/{{$p->id}}" title="Edit sản phẩm">
+												<i class="fas fa-edit"></i>
+											</a>
 										</div>
 									</td>
 								</tr>

@@ -59,8 +59,16 @@
 						<input type="text" value="{{$staff->address}}" name="address" class="form-control">
 					</div>
 					<div class="form-group">
+						<label>Giờ bắt đầu làm</label>
+						<input class="form-control" name="start_in" value="{{$staff->start_in}}" type="time" required />
+					</div>
+					<div class="form-group">
+						<label>Giờ kết thúc</label>
+						<input type="time" name="start_out" value="{{$staff->start_out}}" class="form-control" required >
+					</div>
+					<div class="form-group">
 						<label>Mức Lương</label>
-						<input class="form-control" value="{{$staff->salary}}"  type="number" name="salary" required />
+						<input class="form-control" value="{{$staff->salary}}" type="number" name="salary" required />
 					</div>
 					<div class="form-group">
 						<label>Quyền</label>

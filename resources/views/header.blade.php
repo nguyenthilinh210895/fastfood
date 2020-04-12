@@ -10,14 +10,14 @@
 				<li><a>Loại đồ uống</a>
 					<ul>
 						@foreach($drink as $d)									
-						<li><a href="./products.html">{{$d->name}}</a></li>
+						<li><a href="/product/{{$d->id}}">{{$d->name}}</a></li>
 						@endforeach
 					</ul>
 				</li>	
 				<li><a>Loại Thức Ăn</a>
 					<ul>									
 						@foreach($food as $f)									
-						<li><a href="./products.html">{{$f->name}}</a></li>
+						<li><a href="/product/{{$f->id}}">{{$f->name}}</a></li>
 						@endforeach
 					</ul>
 				</li>

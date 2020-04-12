@@ -1,8 +1,9 @@
 <div id="top-bar" class="container">
 	<div class="row">
 		<div class="span4">
-			<form method="POST" class="search_form">
-				<input type="text" class="input-block-level search-query" Placeholder="eg. Gà Quay...">
+			<form method="GET" action="/search-product" class="search_form">
+				{!!csrf_field()!!}
+				<input type="text" name="key" class="input-block-level search-query" Placeholder="eg. Gà Quay...">
 			</form>
 		</div>
 		<div class="span8">
@@ -35,7 +36,7 @@
 							<hr>
 							@endforeach
 							<div>
-								<p style="margin-left: 10px;"> Tổng Tiền: {{number_format($totalPrice)}} VNĐ <a href="/checkout" class="btn btn-primary">Thanh Toán</a></p>
+								<p style="margin-left: 10px;"> Tổng Tiền: {{number_format($totalPrice)}} VNĐ <a href="/cart" class="btn btn-primary">Xem giỏ hàng</a></p>
 							</div>
 						</ul>
 						@endif
