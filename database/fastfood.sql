@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 05, 2020 lúc 11:18 AM
+-- Thời gian đã tạo: Th4 12, 2020 lúc 03:39 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -58,7 +58,14 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `type`, `delete_flag`, `created_at`, `updated_at`) VALUES
-(1, 'Món Ăn Từ Gà', 'Đồ Ăn', 0, '2020-04-04 08:51:09', '2020-04-04 08:51:09');
+(1, 'Món Ăn Từ Gà', 'Đồ Ăn', 0, '2020-04-04 08:51:09', '2020-04-04 08:51:09'),
+(2, 'Nước Ngọt', 'Đồ Uống', 0, '2020-04-11 01:03:37', '2020-04-11 01:03:37'),
+(3, 'Bia', 'Đồ Uống', 0, '2020-04-11 01:04:01', '2020-04-11 01:04:01'),
+(4, 'Món ăn từ cá', 'Đồ Ăn', 0, '2020-04-11 01:04:19', '2020-04-11 01:04:19'),
+(5, 'Món ăn từ thịt bò', 'Đồ Ăn', 0, '2020-04-11 01:04:32', '2020-04-11 01:04:32'),
+(6, 'Đồ ăn vặt', 'Đồ Ăn', 0, '2020-04-11 01:04:45', '2020-04-11 01:04:45'),
+(7, 'Món tráng miệng', 'Đồ Ăn', 0, '2020-04-11 01:04:51', '2020-04-11 01:04:51'),
+(8, 'Sinh tố', 'Đồ Uống', 0, '2020-04-11 01:05:07', '2020-04-11 01:05:07');
 
 -- --------------------------------------------------------
 
@@ -76,6 +83,13 @@ CREATE TABLE `comment` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `comment`
+--
+
+INSERT INTO `comment` (`id`, `content`, `rate`, `delete_flag`, `id_user`, `id_product`, `created_at`, `updated_at`) VALUES
+(1, 'Món này ngon quá.', 5, 0, 2, 1, '2020-04-07 08:18:17', '2020-04-07 08:18:17');
 
 -- --------------------------------------------------------
 
@@ -198,7 +212,13 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `product_name`, `image`, `unit_price`, `promotion_price`, `unit`, `description`, `delete_flag`, `id_category`, `created_at`, `updated_at`) VALUES
-(1, 'Chân gà xả ớt', 'cxEnk_pngtree-gourmet-promotion-simple-hot-pot-banner-image_177619.jpg', 35000.00, 30000.00, 100, 'Sản phẩm thơm ngon, nhiều dinh dưỡng', 0, 1, '2020-04-04 09:00:09', '2020-04-04 09:02:05');
+(1, 'Chân gà xả ớt', 'cxEnk_pngtree-gourmet-promotion-simple-hot-pot-banner-image_177619.jpg', 35000.00, 30000.00, 100, 'Sản phẩm thơm ngon, nhiều dinh dưỡng', 0, 1, '2020-04-04 09:00:09', '2020-04-04 09:02:05'),
+(2, 'Coca cola', 'ahczH_coca.jpg', 10000.00, NULL, 500, 'Nước ngọt có gas.', 0, 2, '2020-04-11 01:06:45', '2020-04-11 01:06:45'),
+(3, 'Nước Cam', '3Coom_nuoc-giai-khat-co-gas-fanta-cam-lon.jpeg', 10000.00, 9000.00, 1000, 'Nước cam fanta ko có gas', 0, 2, '2020-04-11 01:08:03', '2020-04-11 01:08:03'),
+(4, '7 up', '75UKh_nuoc-ngot-7up-sleek-330ml-1_grande (1).jpg', 10000.00, NULL, 500, '7up ngon, có gas', 0, 2, '2020-04-11 01:32:31', '2020-04-11 01:32:31'),
+(5, 'Mirinda', 'bDP89_169f3e3dd7cb294daa1cbe3725afa16f.jpg', 11000.00, NULL, 500, 'Mirinda ngon ngọt.', 0, 2, '2020-04-11 01:40:03', '2020-04-11 01:40:03'),
+(6, 'Sinh tố xoài', 'ssYvs_cach-lam-sinh-to-xoai-sua-dac.jpg', 20000.00, NULL, 500, 'Sinh tố xoài, nhiều dưỡng chất ngon lành, thành khiết.', 0, 8, '2020-04-11 01:40:58', '2020-04-11 01:40:58'),
+(7, 'Sinh tố dâu tây', '1NlkB_tải xuống.jpg', 35000.00, NULL, 500, 'Sinh tố nhiều dĩnh dưỡng', 0, 8, '2020-04-11 01:41:46', '2020-04-11 01:41:46');
 
 -- --------------------------------------------------------
 
@@ -232,6 +252,15 @@ CREATE TABLE `tables` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tables`
+--
+
+INSERT INTO `tables` (`id`, `table_name`, `code`, `status`, `delete_flag`, `created_at`, `updated_at`) VALUES
+(1, 'Bàn A001', '1231231', 0, 0, '2020-04-11 04:03:34', '2020-04-12 06:36:20'),
+(2, 'Bàn A02', 'abcaaa', 0, 1, '2020-04-11 04:05:42', '2020-04-11 04:10:16'),
+(3, 'Bàn A02', 'abcaaa', 0, 0, '2020-04-11 04:10:23', '2020-04-11 04:10:23');
 
 -- --------------------------------------------------------
 
@@ -276,7 +305,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `address`, `email`, `password`, `avatar`, `salary`, `role`, `delete_flag`, `remember_token`, `created_at`, `updated_at`, `start_in`, `start_out`) VALUES
-(1, 'Admin', '0908909890', 'Trần duy hưng 2', 'admin@gmail.com', '$2y$10$sP5MM/kg0wolexzeNZgDs.Da1XMJugCds57EstBGc272vFZayNyWG', 'avatar.png', '500000000', 1, 0, NULL, '2020-04-04 01:11:33', '2020-04-04 03:25:54', NULL, NULL);
+(1, 'Admin', '0908909890', 'Trần duy hưng 2', 'admin@gmail.com', '$2y$10$sP5MM/kg0wolexzeNZgDs.Da1XMJugCds57EstBGc272vFZayNyWG', 'avatar.png', '500000000', 1, 0, NULL, '2020-04-04 01:11:33', '2020-04-04 03:25:54', NULL, NULL),
+(2, 'Phongbk', '0909090909', 'Hai Bà Tưng', 'phongbk@gmail.com', '$2y$10$tT0AdJug1f/.tujrIEMQAeA9bshzJ/33DT6JRAl9KtZZqpF96LYYm', 'avatar.png', NULL, 0, 0, NULL, '2020-04-05 07:41:49', '2020-04-05 07:41:49', NULL, NULL),
+(3, 'Nhân Viên B', '090909009', 'Đại Cồ Việt', 'nhanvienb@gmail.com', '$2y$10$mgAAwkjpP.WiRAQH1/b8LOQW9jTke0Ninl6aQUmr6UNGuEokZUpd2', 'avatar.png', '6500000', 2, 0, NULL, '2020-04-11 07:42:13', '2020-04-11 07:49:25', '07:35:00', '17:35:00');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -384,13 +415,13 @@ ALTER TABLE `booktable`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `customer`
@@ -402,7 +433,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
@@ -420,7 +451,7 @@ ALTER TABLE `orderdetails`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `receive`
@@ -432,7 +463,7 @@ ALTER TABLE `receive`
 -- AUTO_INCREMENT cho bảng `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `timekeeping`
@@ -444,7 +475,7 @@ ALTER TABLE `timekeeping`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
