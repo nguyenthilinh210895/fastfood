@@ -61,17 +61,19 @@
 							<td>
 								@if($st->role == 1)
 								<span class="badge badge-danger">Admin</span>
-								@else if($st->role == 2)
+								@else
 								<span class="badge badge-primary">Nhân Viên</span>
 								@endif
 							</td>
 							<td>
-								<a class="btn btn-primary" href="/admin/staff/edit/{{$st->id}}" title="Edit Nhân Viên">
-									<i class="fas fa-edit"></i>
-								</a>
-								<a href="/admin/staff/delete/{{$st->id}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')" title="Xóa Nhân Viên">
-									<i class="fas fa-trash-alt"></i>
-								</a>
+								<div class="btn-group">
+									<a class="btn btn-primary" href="/admin/staff/edit/{{$st->id}}" title="Edit Nhân Viên">
+										<i class="fas fa-edit"></i>
+									</a>
+									<a href="/admin/staff/delete/{{$st->id}}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')" title="Xóa Nhân Viên">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								</div>
 							</td>
 						</tr>
 						@endforeach

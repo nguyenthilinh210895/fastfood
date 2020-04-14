@@ -113,7 +113,7 @@
 								@foreach($product as $p)
 								<tr>
 									<td>{{++$i}}</td>
-									<td>{{$p->name}}</td>
+									<td>{{$p->product_name}}</td>
 									<td><a href="img/{{$p->image}}"><img src="img/{{$p->image}}" width="50" height="50"></a></td>
 									<td>{{number_format($p->unit_price)}}</td>
 									<td>{{number_format($p->promotion_price)}}</td>
@@ -123,6 +123,9 @@
 									<td>
 										<div class="btn-group" role="group">
 											<a href="/admin/product/delete/{{$p->id}}" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+											<a class="btn btn-primary" href="/admin/product/edit/{{$p->id}}" title="Edit sản phẩm">
+												<i class="fas fa-edit"></i>
+											</a>
 										</div>
 									</td>
 								</tr>
