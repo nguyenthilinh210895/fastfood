@@ -48,6 +48,9 @@
 						</li>
 						@endforeach
 					</ul>
+					<div class=" row pagination pagination-small pagination-centered"> 
+						{{$product->links()}}
+					</div>
 				</div>						
 			</div>
 		</div>

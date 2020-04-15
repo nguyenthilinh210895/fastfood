@@ -9,19 +9,24 @@ use App\User;
 use App\Category;
 use App\Comment;
 use App\Cart;
+use App\Checkout;
+use App\Customer;
+use App\Order;
+Use App\OrderDetails;
 use Session;
+use DB;
 
 class ClientController extends Controller
 {
 	public function getIndex(){
 		$food = Product::join('category', 'category.id', 'product.id_category')
-						->select('product.*')
-						->where('category.type', 'Đồ Ăn')
-						->paginate(8);
+		->select('product.*')
+		->where('category.type', 'Đồ Ăn')
+		->paginate(8, ['*'], 'food');
 		$drink = Product::join('category', 'category.id', 'product.id_category')
-						->select('product.*')
-						->where('category.type', 'Đồ Uống')
-						->paginate(8);
+		->select('product.*')
+		->where('category.type', 'Đồ Uống')
+		->paginate(8, ['*'], 'drink');
 		return view('client.index', compact('food', 'drink'));
 	}
 
@@ -48,7 +53,12 @@ class ClientController extends Controller
 		$user = array('email' => $req->email, 'password' => $req->password, 'role' => 0);
 
 		if (Auth::attempt($user)) {
-			return redirect('/');
+			if($req->reg == 0){
+				return redirect('/');
+			}
+			else{
+				return redirect()->back();
+			}
 		} 
 		else {
 			return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không chính xác.');
@@ -98,11 +108,11 @@ class ClientController extends Controller
 	public function getProductDetails($id){
 		$product = Product::where('id', $id)->first();
 		$relate_product = Product::where('id_category', $product->id_category)
-								->where('delete_flag', 0)->paginate(4);
+		->where('delete_flag', 0)->paginate(4);
 		$category = Category::orderBy('created_at', 'desc')->take(20)->get();
 		$comment = Comment::where('id_product', $id)
-							->where('delete_flag', 0)
-							->get();
+		->where('delete_flag', 0)
+		->get();
 		return view('client.product.details', compact('product', 'relate_product', 'category', 'comment'));
 	}
 
@@ -118,49 +128,116 @@ class ClientController extends Controller
 	}
 
 	//add to cart
-    public function getAddtoCart(Request $req, $id){
+	public function getAddtoCart(Request $req, $id){
         //check exits product in cart
-        $product = Product::find($id);
-        $oldCart = Session('cart')?Session::get('cart'):null;
-        $cart = new Cart($oldCart);
-        $cart->add($product, $id);
-        $req->Session()->put('cart', $cart);
-        return redirect()->back();
-    }
+		$product = Product::find($id);
+		$oldCart = Session('cart')?Session::get('cart'):null;
+		$cart = new Cart($oldCart);
+		$cart->add($product, $id);
+		$req->Session()->put('cart', $cart);
+		return redirect()->back();
+	}
 
-    public function getDelItemCart($id){
-        $oldCart = Session::has('cart')?Session::get('cart'):null;
-        $cart = new Cart($oldCart);
-        $cart->removeItem($id);
-        if(count($cart->items)>0){
-            Session::put('cart', $cart);
-        }
-        else{
-            Session::forget('cart');
-        }
+	public function getDelItemCart($id){
+		$oldCart = Session::has('cart')?Session::get('cart'):null;
+		$cart = new Cart($oldCart);
+		$cart->removeItem($id);
+		if(count($cart->items)>0){
+			Session::put('cart', $cart);
+		}
+		else{
+			Session::forget('cart');
+		}
 
-        return redirect()->back();
-    }
+		return redirect()->back();
+	}
 
     //checkout
-    public function getCart(){
-    	$category = Category::orderBy('created_at', 'desc')->take(10)->get();
-    	return view('client.cart', compact('category'));
-    }
+	public function getCart(){
+		$category = Category::orderBy('created_at', 'desc')->take(10)->get();
+		return view('client.cart', compact('category'));
+	}
 
     //search product
-    public function getsearchProduct(Request $req){
-    	$product = Product::where('product_name', 'LIKE', '%' .$req->key. '%')->paginate(6);
-        $key = $req->key;
-        $category = Category::orderBy('created_at', 'desc')->take(20)->get();
-        return  view('client.product.search', compact('product', 'key', 'category'));
-    }
+	public function getsearchProduct(Request $req){
+		$product = Product::where('product_name', 'LIKE', '%' .$req->key. '%')->paginate(6);
+		$key = $req->key;
+		$category = Category::orderBy('created_at', 'desc')->take(20)->get();
+		return  view('client.product.search', compact('product', 'key', 'category'));
+	}
 
     // product by category
-    public function getProductByCategory($id){
-    	$product = Product::where('id_category', $id)->paginate(6);
-    	$category = Category::orderBy('created_at', 'desc')->take(20)->get();
-    	$key = Category::where('id', $id)->first();
-        return  view('client.product.product-by-category', compact('product', 'key', 'category'));
-    }
+	public function getProductByCategory($id){
+		$product = Product::where('id_category', $id)->paginate(6);
+		$category = Category::orderBy('created_at', 'desc')->take(20)->get();
+		$key = Category::where('id', $id)->first();
+		return  view('client.product.product-by-category', compact('product', 'key', 'category'));
+	}
+
+    // check out
+	public function getCheckout(Request $req){
+		$checkout = new Checkout();
+		$checkout->total_price = $req->total_price;
+		$checkout->book_type = $req->book_type;
+		Session::put('checkout', $checkout);
+		if($req->book_type == '1'){
+			return view('client.checkout.online');
+		}
+		else{
+			return view('client.checkout.offline');
+		}
+	}
+
+    // accept order
+	public function postAcceptOrderOnline(Request $req){
+		$user = User::where('id', Auth::user()->id)->first();
+$cart = Session::get('cart');
+dd($cart->items);
+		// transaction
+		DB::beginTransaction();
+		try {
+			// save customer
+			$customer = new Customer();
+			$customer->name = $req->name;
+			$customer->email = $req->email;
+			$customer->phone = $req->phone;
+			$customer->address = $req->address;
+			$customer->note = $req->note;
+			$customer->save();
+
+			// save order
+			$order = new Order();
+			$order->total_price = Session::get('checkout')->total_price;
+			if($req->payment == 1){
+				$order->payment = 'Thanh Toán qua ngân lượng';
+				$order->status = 1;
+			}
+			else{
+				$order->payment = 'Thanh Toán khi nhận hàng';
+				$order->status = 0;
+			}
+			$order->note = $req->note;
+			$order->type_order = Session::get('checkout')->book_type;
+			$order->delete_flag = 0;
+			$order->id_customer = $customer->id;
+			$order->save();
+
+			$cart = Session::get('cart');
+			foreach($cart->items as $key => $value){
+				$orderDetails = new OrderDetails();
+				$orderDetails->id_order = $order->id;
+				$orderDetails->id_product = $order->id;
+				$orderDetails->id_order = $order->id;
+				$orderDetails->id_order = $order->id;
+				$orderDetails->id_order = $order->id;
+			}
+			Session::forget('cart');
+			Session::forget('checkout');
+			DB::commit();
+		}
+		catch (Exception $e) {
+            DB::rollBack();
+            return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
+        }
+	}
 }

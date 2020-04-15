@@ -67,3 +67,5 @@ Route::get('del-cart/{id}', [
 Route::get('cart', 'ClientController@getCart');
 Route::get('search-product', 'ClientController@getsearchProduct');
 Route::get('product/{id}', 'ClientController@getProductByCategory');
+Route::get('checkout', 'ClientController@getCheckout');
+Route::post('accept-order-online', 'ClientController@postAcceptOrderOnline');
