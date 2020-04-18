@@ -8,6 +8,8 @@ use App\User;
 use App\Category;
 use App\Product;
 use App\Table;
+use App\Order;
+use App\OrderDetails;
 
 class AdminController extends Controller
 {
@@ -245,7 +247,7 @@ class AdminController extends Controller
 		return view('admin.table.list', compact('table'));
 	}
 
-    // add product
+    // add table
 	public function getAddTable(Request $req){
 		$table = new Table();
 		$table->table_name = $req->table_name;
@@ -291,5 +293,33 @@ class AdminController extends Controller
 		$table->delete_flag = 0;
 		$table->save();
 		return redirect('/admin/table/list')->with('message', 'Sửa thành công.');
+	}
+
+	//list order
+	public function getListOrder(){
+		$order = Order::where('delete_flag', 0)
+						->orderBy('status', 'asc')
+						->orderBy('created_at', 'desc')->get();
+		return view('admin.order.list', compact('order'));
+	}
+
+	public function getAcceptOrder($id){
+		$order = Order::where('id', $id)->first();
+		$order->status = 3;
+		$order->save();
+		return redirect('/admin/order/list')->with('message', 'Đã duyệt');
+	}
+
+	public function getCancelOrder($id){
+		$order = Order::where('id', $id)->first();
+		$order->status = 2;
+		$order->save();
+		return redirect('/admin/order/list')->with('message', 'Đã Hủy');
+	}
+	// view order
+	public function getViewOrder($id){
+		$order = Order::where('id', $id)->first();
+		$order_details = OrderDetails::where('id_order',$id)->get();
+		return view('admin.order.view', compact('order', 'order_details'));
 	}
 }

@@ -40,4 +40,10 @@
 			<span>Quản lý bàn</span>
 		</a>
 	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/admin/order/list">
+			<i class="fas fa-award"></i>
+			<span>Quản lý Đơn</span>
+		</a>
+	</li>
 </ul>

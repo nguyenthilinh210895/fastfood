@@ -138,6 +138,18 @@ class ClientController extends Controller
 		return redirect()->back();
 	}
 
+	//add mulitple to cart
+	public function getAddMultipletoCart(Request $req, $id){
+		$unit = $req->unit;
+        //check exits product in cart
+		$product = Product::find($id);
+		$oldCart = Session('cart')?Session::get('cart'):null;
+		$cart = new Cart($oldCart);
+		$cart->addMulti($product, $id, $unit);
+		$req->Session()->put('cart', $cart);
+		return redirect()->back();
+	}
+
 	public function getDelItemCart($id){
 		$oldCart = Session::has('cart')?Session::get('cart'):null;
 		$cart = new Cart($oldCart);
@@ -191,8 +203,6 @@ class ClientController extends Controller
     // accept order
 	public function postAcceptOrderOnline(Request $req){
 		$user = User::where('id', Auth::user()->id)->first();
-$cart = Session::get('cart');
-dd($cart->items);
 		// transaction
 		DB::beginTransaction();
 		try {
@@ -226,14 +236,15 @@ dd($cart->items);
 			foreach($cart->items as $key => $value){
 				$orderDetails = new OrderDetails();
 				$orderDetails->id_order = $order->id;
-				$orderDetails->id_product = $order->id;
-				$orderDetails->id_order = $order->id;
-				$orderDetails->id_order = $order->id;
-				$orderDetails->id_order = $order->id;
+				$orderDetails->id_product = $key;
+				$orderDetails->unit_price = $value['price']/$value['qty'];
+				$orderDetails->quantity = $value['qty'];
+				$orderDetails->save();
 			}
 			Session::forget('cart');
 			Session::forget('checkout');
 			DB::commit();
+			return view('client.checkout.complete');
 		}
 		catch (Exception $e) {
             DB::rollBack();
