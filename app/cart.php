@@ -57,6 +57,33 @@ class Cart
 		$this->totalPrice += $price;
 	}
 
+	// update
+	public function update($item, $id, $unit){
+		//delete item
+		$this->totalQty -= $this->items[$id]['qty'];
+		$this->totalPrice -= $this->items[$id]['price'];
+		unset($this->items[$id]);
+
+		//update item
+		$price = 0;
+		if($item->promotion_price != null){
+			$price = $item->promotion_price * $unit;
+		}else{
+			$price = $item->unit_price * $unit;
+		}
+		$cart = ['qty'=>0, 'price' => $price, 'item' => $item];
+		if($this->items){
+			if(array_key_exists($id, $this->items)){
+				$cart = $this->items[$id];
+			}
+		}
+		$cart['qty'] = $unit;
+		$cart['price'] = $price;
+		$this->items[$id] = $cart;
+		$this->totalQty += $unit;
+		$this->totalPrice += $price;
+	}
+
 	//delete 1
 	public function reduceByOne($id){
 		$this->items[$id]['qty']--;

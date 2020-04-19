@@ -12,6 +12,10 @@ class Order extends Model
     	return $this->belongsTo('App\Customer', 'id_customer', 'id');
     }
 
+    public function staff(){
+        return $this->belongsTo('App\User', 'id_staff', 'id');
+    }
+
     public function orderdetails(){
     	return $this->hasMany('App\OrderDetails', 'id_order', 'id');
     }

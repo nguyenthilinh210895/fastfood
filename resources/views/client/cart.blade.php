@@ -37,6 +37,7 @@
 						</div>
 						<div class="product-quantity">
 							<input type="number" value="{{$product['qty']}}" min="1">
+							<input type="hidden" class="id_item" value="{{$product['item']['id']}}" name="">
 						</div>
 						<div class="product-removal">
 							<a href="{{route('delete-cart', $product['item']['id'])}}" class="btn btn-xs btn-danger">x</a>
@@ -176,6 +177,22 @@
 					$(this).fadeIn(fadeTime);
 				});
 			});  
+
+			//update session cart
+			var productRow = $(quantityInput).parent().parent();
+			var quantity = $(quantityInput).val();
+			var id = $(quantityInput).parent().children('.id_item').val();
+			$.ajax({
+                url: "{{ asset('/update-cart') }}",
+                method: "GET",
+                data: { 
+                	'unit': quantity,
+                	'id': id,
+                },
+                success: function(data) {
+                    console.log('get full list success');
+                }
+            });
 		}
 	});
 </script>

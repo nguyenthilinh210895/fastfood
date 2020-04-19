@@ -45,6 +45,19 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/table/off/{id}', 'AdminController@getOffTable');
 		Route::get('/table/edit/{id}', 'AdminController@getEditTable');
 		Route::post('/table/edit/{id}', 'AdminController@postEditTable');
+		Route::get('/table/booktable', 'AdminController@getListBookTable');
+		Route::get('/booktable/accept/{id}', 'AdminController@getAcceptBookTable');
+		Route::get('/booktable/cancel/{id}', 'AdminController@getCancelBookTable');
+
+		// manager receive
+		Route::get('/receive/list', 'AdminController@getListReceive');
+		Route::get('/receive/delete/{id}', 'AdminController@getDeleteReceive');
+		Route::post('/receive/add', 'AdminController@postAddReceive');
+
+		// manager timekeeping
+		Route::get('/timekeeping/list', 'AdminController@getListTimeKeeping');
+		Route::get('/timekeeping/delete/{id}', 'AdminController@getDeleteTimeKeeping');
+		Route::post('/timekeeping/add', 'AdminController@postAddTimeKeeping');
 
 		//manage order
 		Route::get('/order/list', 'AdminController@getListOrder');
@@ -62,6 +75,9 @@ Route::post('/register', 'ClientController@postRegister');
 Route::get('/logout', 'ClientController@getLogout');
 Route::get('/product-detail/{id}', 'ClientController@getProductDetails');
 Route::post('/comment/{id}', 'ClientController@postComment');
+Route::get('/sales-off', 'ClientController@getSaleOff');
+Route::get('/introduce', 'ClientController@getIntroduce');
+Route::post('/booktable', 'ClientController@postBookTable');
 // cart
 Route::get('add-to-cart/{id}', [
 	'as'=>'addcart',
@@ -70,6 +86,10 @@ Route::get('add-to-cart/{id}', [
 Route::get('add-multiple-cart/{id}', [
 	'as'=>'addmultiplecart',
 	'uses'=>'ClientController@getAddMultipletoCart'
+]);
+Route::get('update-cart', [
+	'as'=>'updatecart',
+	'uses'=>'ClientController@getUpdateCart'
 ]);
 Route::get('del-cart/{id}', [
 	'as'=>'delete-cart',

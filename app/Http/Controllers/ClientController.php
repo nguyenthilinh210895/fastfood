@@ -12,9 +12,12 @@ use App\Cart;
 use App\Checkout;
 use App\Customer;
 use App\Order;
-Use App\OrderDetails;
+use App\OrderDetails;
+use App\Table;
+use App\BookTable;
 use Session;
 use DB;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -150,6 +153,19 @@ class ClientController extends Controller
 		return redirect()->back();
 	}
 
+	//update to cart
+	public function getUpdateCart(Request $req){
+		$unit = $req->unit;
+		$id = $req->id;
+        //check exits product in cart
+		$product = Product::find($id);
+		$oldCart = Session('cart')?Session::get('cart'):null;
+		$cart = new Cart($oldCart);
+		$cart->update($product, $id, $unit);
+		$req->Session()->put('cart', $cart);
+		return redirect()->back();
+	}
+
 	public function getDelItemCart($id){
 		$oldCart = Session::has('cart')?Session::get('cart'):null;
 		$cart = new Cart($oldCart);
@@ -245,6 +261,55 @@ class ClientController extends Controller
 			Session::forget('checkout');
 			DB::commit();
 			return view('client.checkout.complete');
+		}
+		catch (Exception $e) {
+            DB::rollBack();
+            return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
+        }
+	}
+
+	// sale off
+	public function getSaleOff(){
+		$product = Product::where('promotion_price', '<>', 'null')->paginate(6);
+		$category = Category::orderBy('created_at', 'desc')->take(20)->get();
+		return  view('client.product.saleoff', compact('product', 'category'));
+	}
+
+	// introduce
+	public function getIntroduce(){
+		$table = Table::where('delete_flag', 0)->get();
+		return view('client.introduce', compact('table'));
+	}
+
+	// booktable
+	public function postBookTable(Request $req){
+		$table = Table::find($req->id);
+		// transaction
+		DB::beginTransaction();
+		try {
+			// save customer
+			$customer = new Customer();
+			$customer->name = $req->name;
+			$customer->email = $req->email;
+			$customer->phone = $req->phone;
+			$customer->address = $table->table_name;
+			$customer->note = $req->note;
+			$customer->save();
+
+			// save booktable
+			$booktable = new BookTable();
+			$booktable->note = $req->note;
+			$booktable->id_customer = $customer->id;
+			$booktable->id_table = $table->id;
+			$booktable->status = 0;
+			$booktable->save();
+
+			//save table
+			$table->status = 1;
+			$table->save();
+
+			DB::commit();
+			return redirect('/introduce')->with('message', 'Đã đặt bàn, chúng tôi sẽ liên hệ lại với bạn sau ít phút');
 		}
 		catch (Exception $e) {
             DB::rollBack();

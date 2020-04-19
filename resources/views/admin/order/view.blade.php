@@ -4,7 +4,7 @@
 	<!-- Breadcrumbs-->
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/index">Trang Chủ</a>
+			<a href="/admin/index">Trang Chủ</a>
 		</li>
 		<li class="breadcrumb-item active">Hóa Đơn</li>
 	</ol>
@@ -15,7 +15,7 @@
 				<button id="printInvoice" class="btn btn-info">
 					<i class="fa fa-print"></i> Print
 				</button>
-				@if($order->status == 0 or $order->status == 1)
+				@if($order->status_staff == 0)
 				<a href="/admin/order/accept/{{$order->id}}" title="Duyệt" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="btn btn-xs btn-primary"><i class="fas fa-check"></i> Hoàn Thành</a>
 				<a href="/admin/order/cancel/{{$order->id}}"  onclick="return confirm('Bạn chắc chắn muốn hủy?')" title="Cancel" class="btn btn-xs btn-danger"><i class="fas fa-window-close"></i> Hủy</a>
 				@endif
@@ -60,6 +60,7 @@
 							<h1 class="invoice-id">Hóa Đơn</h1>
 							<div class="date">Mã Hóa Đơn: #OD{{$order->id}}</div>
 							<div class="date">Ngày đặt: {{$order->created_at}}</div>
+							<div class="date">Nhân Viên Duyệt: {{$order->staff->name}}</div>
 						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0">

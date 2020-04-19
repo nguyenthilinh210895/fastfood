@@ -17,7 +17,9 @@ class CreateTableBooktableTable extends Migration
             $table->increments('id');
             $table->string('note');
             $table->integer('status')->nullable();
-            $table->datetime('day');
+
+            $table->integer('id_table')->unsigned();
+            $table->foreign('id_table')->references('id')->on('tables')->onDelete('cascade');;
 
             $table->integer('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('customer')->onDelete('cascade');

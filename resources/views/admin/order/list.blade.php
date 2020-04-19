@@ -4,7 +4,7 @@
 	<!-- Breadcrumbs-->
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/index">Trang Chủ</a>
+			<a href="/admin/index">Trang Chủ</a>
 		</li>
 		<li class="breadcrumb-item active">Sản Phẩm</li>
 	</ol>
@@ -39,6 +39,7 @@
 									<th>Mã đơn</th>
 									<th>Khách Hàng</th>
 									<th>Tổng Tiền</th>
+									<th>Thanh toán</th>
 									<th>Trạng Thái</th>
 									<th>Loại Đơn</th>
 									<th>Địa Chỉ</th>
@@ -51,6 +52,7 @@
 									<th>Mã đơn</th>
 									<th>Khách Hàng</th>
 									<th>Tổng Tiền</th>
+									<th>Thanh toán</th>
 									<th>Trạng Thái</th>
 									<th>Loại Đơn</th>
 									<th>Địa Chỉ</th>
@@ -70,10 +72,15 @@
 										<span class="badge badge-secondary">Chờ thanh toán</span>
 										@elseif($o->status == 1)
 										<span class="badge badge-primary">Đã Thanh toán</span>
+										@endif
+									</td>
+									<td>
+										@if($o->status_staff == 0)
+										<span class="badge badge-secondary">Chưa duyệt</span>
+										@elseif($o->status == 1)
+										<span class="badge badge-primary">Đã Duyệt</span>
 										@elseif($o->status == 2)
 										<span class="badge badge-danger">Hủy</span>
-										@else
-										<span class="badge badge-success">Hoàn Tất</span>
 										@endif
 									</td>
 									<td>
@@ -93,7 +100,7 @@
 									<td>
 										<div class="btn-group" role="group">
 											<a href="/admin/order/view/{{$o->id}}" title="Xem" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-											@if($o->status == 0 or $o->status == 1)
+											@if($o->status_staff == 0)
 											<a href="/admin/order/accept/{{$o->id}}" title="Duyệt" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="btn btn-xs btn-primary"><i class="fas fa-check"></i></a>
 											<a href="/admin/order/cancel/{{$o->id}}"  onclick="return confirm('Bạn chắc chắn muốn hủy?')" title="Cancel" class="btn btn-xs btn-danger"><i class="fas fa-window-close"></i></a>
 											@endif
