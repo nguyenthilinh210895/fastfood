@@ -21,6 +21,9 @@
 	Chúng tôi mang lại những món ăn ngon, hấp dẫn, luôn luôn tươi sạch.
 	<br/>Hãy đến với chúng tôi và thưởng thức.
 </section>
+@if(Session::has('error'))
+<div class="alert alert-danger">{{Session::get('error')}}</div>
+@endif
 <section class="main-content">
 	<div class="row">
 		<div class="span12">													
@@ -65,6 +68,9 @@
 								</li>
 								@endforeach
 							</ul>
+							<div class=" row pagination pagination-small pagination-centered"> 
+								{{ $food->appends(array_except(Request::only('f'), 'page'))->links() }}
+							</div>
 						</div>						
 					</div>
 				</div>						
@@ -108,6 +114,9 @@
 									</div>
 								</li>
 								@endforeach
+								<div class=" row pagination pagination-small pagination-centered"> 
+									{{ $drink->appends(array_except(Request::only('q'), 'page'))->links() }}
+								</div>
 							</ul>
 						</div>					
 					</div>

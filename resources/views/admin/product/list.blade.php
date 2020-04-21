@@ -4,7 +4,7 @@
 	<!-- Breadcrumbs-->
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="/index">Trang Chủ</a>
+			<a href="/admin/index">Trang Chủ</a>
 		</li>
 		<li class="breadcrumb-item active">Sản Phẩm</li>
 	</ol>

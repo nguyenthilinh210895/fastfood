@@ -8,72 +8,87 @@
 		<div class="span9">					
 			<h4 class="title"><span class="text"><strong>Your</strong> Cart</span></h4>
 			@if(Session::has('cart'))
-			<div class="shopping-cart">
-				<div class="column-labels">
-					<label class="product-image">Image</label>
-					<label class="product-details">Product</label>
-					<label class="product-price">Đơn Giá</label>
-					<label class="product-quantity">Số Lượng</label>
-					<label class="product-removal">Remove</label>
-					<label class="product-line-price">Total</label>
-				</div>
-				@foreach($product_cart as $product)
-				<div class="product">
-					<div class="product-image">
-						<img src="img/{{$product['item']['image']}}">
+			<form method="GET" action="/checkout">
+				{!!csrf_field()!!}
+				<div class="shopping-cart">
+					<div class="column-labels">
+						<label class="product-image">Image</label>
+						<label class="product-details">Product</label>
+						<label class="product-price">Đơn Giá</label>
+						<label class="product-quantity">Số Lượng</label>
+						<label class="product-removal">Remove</label>
+						<label class="product-line-price">Total</label>
 					</div>
-					<div class="product-details">
-						<div class="product-title"><b>{{$product['item']['product_name']}}</b></div>
-						<p class="product-description">{{$product['item']['description']}}</p>
-					</div>
-					<div class="product-price">
-						@if($product['item']['promotion_price']!=0)
-						{{($product['item']['promotion_price'])}} VNĐ
-						@else
-						{{($product['item']['unit_price'])}} VNĐ
-						@endif
-					</div>
-					<div class="product-quantity">
-						<input type="number" value="{{$product['qty']}}" min="1">
-					</div>
-					<div class="product-removal">
-						<a href="{{route('delete-cart', $product['item']['id'])}}" class="btn btn-xs btn-danger">x</a>
-					</div>
-					<div class="product-line-price">
-						@if($product['item']['promotion_price']!=0)
-						{{(int)($product['item']['promotion_price']) * (int)($product['qty'])}} VNĐ
-						@else
-						{{(int)($product['item']['unit_price']) * (int)($product['qty'])}} VNĐ
-						@endif
-					</div>
-				</div>
-				@endforeach
-				<div class="totals">
-					<div class="totals-item">
-						<label>Tổng Tiền</label>
-						<div class="totals-value" id="cart-subtotal">
-							{{($totalPrice)}} VNĐ
+					@foreach($product_cart as $product)
+					<div class="product">
+						<div class="product-image">
+							<img src="img/{{$product['item']['image']}}">
+						</div>
+						<div class="product-details">
+							<div class="product-title"><b>{{$product['item']['product_name']}}</b></div>
+							<p class="product-description">{{$product['item']['description']}}</p>
+						</div>
+						<div class="product-price">
+							@if($product['item']['promotion_price']!=0)
+							{{($product['item']['promotion_price'])}} VNĐ
+							@else
+							{{($product['item']['unit_price'])}} VNĐ
+							@endif
+						</div>
+						<div class="product-quantity">
+							<input type="number" value="{{$product['qty']}}" min="1">
+							<input type="hidden" class="id_item" value="{{$product['item']['id']}}" name="">
+						</div>
+						<div class="product-removal">
+							<a href="{{route('delete-cart', $product['item']['id'])}}" class="btn btn-xs btn-danger">x</a>
+						</div>
+						<div class="product-line-price">
+							@if($product['item']['promotion_price']!=0)
+							{{(int)($product['item']['promotion_price']) * (int)($product['qty'])}} VNĐ
+							@else
+							{{(int)($product['item']['unit_price']) * (int)($product['qty'])}} VNĐ
+							@endif
 						</div>
 					</div>
-					<div class="totals-item">
-						<label>VAT (5%):</label>
-						<div class="totals-value" id="cart-tax">
-							{{(float)($totalPrice)*0.05}} VNĐ
+					@endforeach
+					<div class="totals">
+						<div class="totals-item">
+							<label>Tổng Tiền</label>
+							<div class="totals-value" id="cart-subtotal">
+								{{($totalPrice)}} VNĐ
+							</div>
 						</div>
-					</div>
-					<div class="totals-item totals-item-total">
-						<label>Tổng Cộng:</label>
-						<div class="totals-value" id="cart-total">
-							{{(float)($totalPrice)*0.05 + (float)($totalPrice)}} VNĐ
+						<div class="totals-item">
+							<label>VAT (5%):</label>
+							<div class="totals-value" id="cart-tax">
+								{{(float)($totalPrice)*0.05}} VNĐ
+							</div>
+						</div>
+						<div class="totals-item totals-item-total">
+							<label>Tổng Cộng:</label>
+							<div class="totals-value" id="cart-total">
+								{{(float)($totalPrice)*0.05 + (float)($totalPrice)}} VNĐ
+							</div>
+							<input type="hidden" value="{{(float)($totalPrice)*0.05 + (float)($totalPrice)}}" name="total_price">
 						</div>
 					</div>
 				</div>
-			</div>
-			<p class="buttons center">				
-			<!-- 	<button class="btn" type="button">Update</button>
-				<button class="btn" type="button">Continue</button> -->
-				<button class="btn btn-primary" type="submit" id="checkout">Checkout</button>
-			</p>
+				<h4>Bạn muốn đặt online hay offline?</h4>
+				<p>Lựa chọn 1 trong hình thức sau.</p>
+				<label class="radio">
+					<input type="radio" name="book_type" id="optionsRadios1" value="1" checked="">
+					Book Online
+				</label>
+				<label class="radio">
+					<input type="radio" name="book_type" id="optionsRadios2" value="2">
+					Book Offline
+				</label>
+				<p class="buttons center">				
+					<button class="btn btn-primary" type="submit" id="checkout">
+						Tiền Hành Thanh Toán
+					</button>
+				</p>
+			</form>
 			@else
 			<center><b>Giỏ hàng trống</b></center>	
 			@endif				
@@ -93,10 +108,17 @@
 </section>
 <script type="text/javascript">
 	$(document).ready(function(){
+		// block enter form
+		$(window).keydown(function(event){
+			if(event.keyCode == 13) {
+				event.preventDefault();
+				return false;
+			}
+		});
+
 		/* Set rates + misc */
 		var taxRate = 0.05;
 		var fadeTime = 300;
-
 
 		/* Assign actions */
 		$('.product-quantity input').change( function() {
@@ -127,6 +149,7 @@
 				$('#cart-subtotal').html(subtotal.toFixed() + " VNĐ");
 				$('#cart-tax').html(tax.toFixed() + " VNĐ");
 				$('#cart-total').html(total.toFixed() + " VNĐ");
+				$("input[name = 'total_price']").val(total);
 				if(total == 0){
 					$('.checkout').fadeOut(fadeTime);
 				}else{
@@ -154,6 +177,22 @@
 					$(this).fadeIn(fadeTime);
 				});
 			});  
+
+			//update session cart
+			var productRow = $(quantityInput).parent().parent();
+			var quantity = $(quantityInput).val();
+			var id = $(quantityInput).parent().children('.id_item').val();
+			$.ajax({
+                url: "{{ asset('/update-cart') }}",
+                method: "GET",
+                data: { 
+                	'unit': quantity,
+                	'id': id,
+                },
+                success: function(data) {
+                    console.log('get full list success');
+                }
+            });
 		}
 	});
 </script>

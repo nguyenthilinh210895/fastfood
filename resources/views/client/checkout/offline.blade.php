@@ -44,39 +44,32 @@
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Thông Tin Khách Hàng</a>
 					</div>
-					<div id="collapseTwo" class="accordion-body collapse">
+					<div id="collapseTwo" class="accordion-body collapse <?php if(Auth::user()) echo 'in' ?>">
 						<div class="accordion-inner">
 							<div class="row-fluid">
 								<div class="span6">
-									<h4>Your Personal Details</h4>
 									<div class="control-group">
-										<label class="control-label">First Name</label>
+										<label class="control-label">Họ Tên</label>
 										<div class="controls">
-											<input type="text" placeholder="" class="input-xlarge">
+											<input type="text" name="name" placeholder="" class="input-xlarge">
 										</div>
 									</div>
 									<div class="control-group">
-										<label class="control-label">Last Name</label>
+										<label class="control-label">Email</label>
 										<div class="controls">
-											<input type="text" placeholder="" class="input-xlarge">
+											<input type="email" name="email" placeholder="" class="input-xlarge">
 										</div>
 									</div>					  
 									<div class="control-group">
-										<label class="control-label">Email Address</label>
+										<label class="control-label">Số Điện Thoại</label>
 										<div class="controls">
-											<input type="text" placeholder="" class="input-xlarge">
+											<input type="number" name="phone" placeholder="" class="input-xlarge">
 										</div>
 									</div>
 									<div class="control-group">
-										<label class="control-label">Telephone</label>
+										<label class="control-label">Địa Chỉ Nhận Hàng</label>
 										<div class="controls">
-											<input type="text" placeholder="" class="input-xlarge">
-										</div>
-									</div>
-									<div class="control-group">
-										<label class="control-label">Fax</label>
-										<div class="controls">
-											<input type="text" placeholder="" class="input-xlarge">
+											<input type="text" name="address" placeholder="" class="input-xlarge">
 										</div>
 									</div>
 								</div>

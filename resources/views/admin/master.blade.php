@@ -17,6 +17,10 @@
 
 	<!-- Page level plugin CSS-->
 	<link href="admintemplate/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+	
+	<!-- jquery -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 	<!-- Custom styles for this template-->
 	<link href="admintemplate/css/sb-admin.css" rel="stylesheet">

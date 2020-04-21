@@ -40,9 +40,9 @@
 					
 				</div>
 				<div class="span5">
-					<form class="form-inline">
+					<form class="form-inline" action="{{route('addmultiplecart', $product->id)}}">
 						<label>Số Lượng:</label>
-						<input type="text" class="span1" placeholder="1">
+						<input type="number" min="1" name="unit" step="1" class="span1" required="" value="1">
 						<button class="btn btn-primary" type="submit">Add cart</button>
 					</form>
 				</div>							

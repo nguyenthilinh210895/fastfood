@@ -8,6 +8,11 @@ use App\User;
 use App\Category;
 use App\Product;
 use App\Table;
+use App\BookTable;
+use App\Order;
+use App\OrderDetails;
+use App\Receive;
+use App\TimeKeeping;
 
 class AdminController extends Controller
 {
@@ -245,7 +250,7 @@ class AdminController extends Controller
 		return view('admin.table.list', compact('table'));
 	}
 
-    // add product
+    // add table
 	public function getAddTable(Request $req){
 		$table = new Table();
 		$table->table_name = $req->table_name;
@@ -291,5 +296,107 @@ class AdminController extends Controller
 		$table->delete_flag = 0;
 		$table->save();
 		return redirect('/admin/table/list')->with('message', 'Sửa thành công.');
+	}
+
+	public function getListBookTable(){
+		$bookTable = BookTable::orderBy('created_at', 'desc')->get();
+		return view('admin.table.booktable', compact('bookTable'));
+	}
+
+	public function getAcceptBookTable($id){
+		$bookTable = BookTable::find($id);
+		$bookTable->status = 1;
+		$bookTable->save();
+		return redirect()->back()->with('message', 'Đã Duyệt');
+	}
+
+	public function getCancelBookTable($id){
+		$bookTable = BookTable::find($id);
+		$bookTable->status = 2;
+		$bookTable->save();
+
+		$table = Table::find($bookTable->id_table);
+		$table->status = 0;
+		$table->save();
+		return redirect()->back()->with('error', 'Đã Hủy');
+	}
+	//list order
+	public function getListOrder(){
+		$order = Order::where('delete_flag', 0)
+						->orderBy('status', 'asc')
+						->orderBy('created_at', 'desc')->get();
+		return view('admin.order.list', compact('order'));
+	}
+
+	public function getAcceptOrder($id){
+		$order = Order::where('id', $id)->first();
+		$order->status = 1;
+		$order->status_staff = 1;
+		$order->id_staff = Auth::user()->id;
+		$order->save();
+		return redirect('/admin/order/list')->with('message', 'Đã duyệt');
+	}
+
+	public function getCancelOrder($id){
+		$order = Order::where('id', $id)->first();
+		$order->status = 0;
+		$order->status_staff = 2;
+		$order->id_staff = Auth::user()->id;
+		$order->save();
+		return redirect('/admin/order/list')->with('message', 'Đã Hủy');
+	}
+
+	// view order
+	public function getViewOrder($id){
+		$order = Order::where('id', $id)->first();
+		$order_details = OrderDetails::where('id_order',$id)->get();
+		return view('admin.order.view', compact('order', 'order_details'));
+	}
+
+	// Receive
+	public function getListReceive(){
+		$receive = Receive::orderBy('day', 'desc')->get();
+		return view('admin.receive.list', compact('receive'));
+	}
+
+	public function getDeleteReceive($id){
+		$receive = Receive::find($id);
+		$receive->delete();
+		return redirect()->back()->with('error', 'Đã Xóa');
+	}
+
+	public function postAddReceive(Request $req){
+		$receive = new Receive();
+		$receive->name = $req->name;
+		$receive->unit = $req->unit;
+		$receive->price = $req->unit_price;
+		$receive->total_price = $req->total_price;
+		$receive->day = $req->day;
+		$receive->save();
+		return redirect()->back()->with('message', 'Đã Nhập');
+	}
+
+	// time keeping
+	public function getListTimeKeeping(){
+		$time = TimeKeeping::orderBy('date', 'desc')->get();
+		$staff = User::where('role', 2)
+					->where('delete_flag', 0)
+					->get();
+		return view('admin.timekeeping.list', compact('time', 'staff'));
+	}
+
+	public function getDeleteTimeKeeping($id){
+		$time = TimeKeeping::find($id);
+		$time->delete();
+		return redirect()->back()->with('error', 'Đã Xóa');
+	}
+
+	public function postAddTimeKeeping(Request $req){
+		$time = new TimeKeeping();
+		$time->date = $req->date;
+		$time->id_staff_absent = $req->staff_absent;
+		$time->id_staff_replace = $req->staff_replace;
+		$time->save();
+		return redirect()->back()->with('message', 'Đã Nhập');
 	}
 }

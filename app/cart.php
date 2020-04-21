@@ -17,18 +17,6 @@ class Cart
 	}
 
 	public function add($item, $id){
-		// $giohang = ['qty'=>0, 'price' => $item->unit_price, 'item' => $item];
-		// if($this->items){
-		// 	if(array_key_exists($id, $this->items)){
-		// 		$giohang = $this->items[$id];
-		// 	}
-		// }
-		// $giohang['qty']++;
-		// $giohang['price'] = $item->unit_price * $giohang['qty'];
-		// $this->items[$id] = $giohang;
-		// $this->totalQty++;
-		// $this->totalPrice += $item->unit_price;
-
 		$price = 0;
 		if($item->promotion_price != null){
 			$price = $item->promotion_price;
@@ -48,7 +36,55 @@ class Cart
 		$this->totalPrice += $price;
 	}
 
-	//xóa 1
+	// add multi
+	public function addMulti($item, $id, $unit){
+		$price = 0;
+		if($item->promotion_price != null){
+			$price = $item->promotion_price * $unit;
+		}else{
+			$price = $item->unit_price * $unit;
+		}
+		$cart = ['qty'=>0, 'price' => $price, 'item' => $item];
+		if($this->items){
+			if(array_key_exists($id, $this->items)){
+				$cart = $this->items[$id];
+			}
+		}
+		$cart['qty'] = $unit;
+		$cart['price'] = $price;
+		$this->items[$id] = $cart;
+		$this->totalQty += $unit;
+		$this->totalPrice += $price;
+	}
+
+	// update
+	public function update($item, $id, $unit){
+		//delete item
+		$this->totalQty -= $this->items[$id]['qty'];
+		$this->totalPrice -= $this->items[$id]['price'];
+		unset($this->items[$id]);
+
+		//update item
+		$price = 0;
+		if($item->promotion_price != null){
+			$price = $item->promotion_price * $unit;
+		}else{
+			$price = $item->unit_price * $unit;
+		}
+		$cart = ['qty'=>0, 'price' => $price, 'item' => $item];
+		if($this->items){
+			if(array_key_exists($id, $this->items)){
+				$cart = $this->items[$id];
+			}
+		}
+		$cart['qty'] = $unit;
+		$cart['price'] = $price;
+		$this->items[$id] = $cart;
+		$this->totalQty += $unit;
+		$this->totalPrice += $price;
+	}
+
+	//delete 1
 	public function reduceByOne($id){
 		$this->items[$id]['qty']--;
 		$this->items[$id]['price'] -= $this->items[$id]['item']['price'];
@@ -58,7 +94,7 @@ class Cart
 			unset($this->items[$id]);
 		}
 	}
-	//xóa nhiều
+	//delete nhiều
 	public function removeItem($id){
 		$this->totalQty -= $this->items[$id]['qty'];
 		$this->totalPrice -= $this->items[$id]['price'];

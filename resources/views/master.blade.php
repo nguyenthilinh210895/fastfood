@@ -40,18 +40,32 @@
 		<script src="shopper/themes/js/common.js"></script>
 		<script src="shopper/themes/js/jquery.flexslider-min.js"></script>
 		<script type="text/javascript">
-		$(function() {
-			$(document).ready(function() {
-				$('.flexslider').flexslider({
-					animation: "fade",
-					slideshowSpeed: 4000,
-					animationSpeed: 600,
-					controlNav: false,
-					directionNav: true,
+			$(function() {
+				$(document).ready(function() {
+					$('.flexslider').flexslider({
+						animation: "fade",
+						slideshowSpeed: 4000,
+						animationSpeed: 600,
+						controlNav: false,
+						directionNav: true,
 						controlsContainer: ".flex-container" // the container that holds the flexslider
 					});
+				});
 			});
-		});
 		</script>
+
+		<!--Start of Tawk.to Script-->
+		<script type="text/javascript">
+			var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+			(function(){
+				var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+				s1.async=true;
+				s1.src='https://embed.tawk.to/5e9ab6df69e9320caac4ec78/default';
+				s1.charset='UTF-8';
+				s1.setAttribute('crossorigin','*');
+				s0.parentNode.insertBefore(s1,s0);
+			})();
+		</script>
+		<!--End of Tawk.to Script-->
 	</body>
 	</html>

@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <section class="header_text sub">
-	<h4><span>Danh sách sản phẩm</span></h4>
+	<h4><span>Sản Phẩm Khuyến Mãi </span></h4>
 </section>
 <section class="main-content">				
 	<div class="row">						
@@ -10,7 +10,7 @@
 				<span class="pull-left">
 					<span class="text">
 						<span class="line">
-							<strong>{{$key->name}} </strong>
+							<strong>Khuyến Mãi </strong>
 						</span>
 					</span>
 				</span>

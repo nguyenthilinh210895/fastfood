@@ -9,17 +9,17 @@
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<i class="fas fa-fw fa-folder"></i>
-			<span>Pages</span>
+			<span>Customer</span>
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-			<h6 class="dropdown-header">Login Screens:</h6>
-			<a class="dropdown-item" href="login.html">Login</a>
-			<a class="dropdown-item" href="register.html">Register</a>
-			<a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-			<div class="dropdown-divider"></div>
-			<h6 class="dropdown-header">Other Pages:</h6>
-			<a class="dropdown-item" href="404.html">404 Page</a>
-			<a class="dropdown-item" href="blank.html">Blank Page</a>
+			<a class="dropdown-item" href="/admin/order/list">
+				<i class="fas fa-award"></i>
+				<span>Quản lý Đơn</span>
+			</a>
+			<a class="dropdown-item" href="/admin/table/booktable">
+				<i class="fas fa-award"></i>
+				<span>Quản lý Đặt Bàn</span>
+			</a>
 		</div>
 	</li>
 	<li class="nav-item">
@@ -38,6 +38,18 @@
 		<a class="nav-link" href="/admin/table/list">
 			<i class="fas fa-fw fa-table"></i>
 			<span>Quản lý bàn</span>
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/admin/receive/list">
+			<i class="fas fa-fw fa-table"></i>
+			<span>Nhập hàng</span>
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/admin/timekeeping/list">
+			<i class="fas fa-fw fa-table"></i>
+			<span>Nghỉ Phép - Làm Bù</span>
 		</a>
 	</li>
 </ul>

@@ -21,7 +21,7 @@
 						@endforeach
 					</ul>
 				</li>
-				<li><a href="./products.html">Khuyến mãi</a></li>
+				<li><a href="/sales-off">Khuyến mãi</a></li>
 			</ul>
 		</nav>
 	</div>

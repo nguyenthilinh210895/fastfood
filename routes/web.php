@@ -20,7 +20,7 @@ Route::middleware(['adminLogin'])->group(function () {
 	Route::group(['prefix' => 'admin'], function () {
 		Route::get('/index', 'AdminController@getIndex');
 
-    // manage staff
+    	// manage staff
 		Route::get('/staff/list', 'AdminController@getListStaff');
 		Route::get('/staff/add', 'AdminController@getAddStaff');
 		Route::post('/staff/add', 'AdminController@postAddStaff');
@@ -28,7 +28,7 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::post('/staff/edit/{id}', 'AdminController@postEditStaff');
 		Route::get('/staff/delete/{id}', 'AdminController@getDeleteStaff');
 
-	//manage product
+		//manage product
 		Route::get('/product/list', 'AdminController@getListProduct');
 		Route::post('/category/add', 'AdminController@postAddCategory');
 		Route::get('/category/delete/{id}', 'AdminController@getDeleteCategory');
@@ -37,7 +37,7 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::post('/product/edit/{id}', 'AdminController@postEditProduct');
 		Route::get('/product/delete/{id}', 'AdminController@getDeleteProduct');
 
-	// manage table
+		// manage table
 		Route::get('/table/list', 'AdminController@getListTable');
 		Route::post('/table/add', 'AdminController@getAddTable');
 		Route::get('/table/delete/{id}', 'AdminController@getDeleteTable');
@@ -45,7 +45,27 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/table/off/{id}', 'AdminController@getOffTable');
 		Route::get('/table/edit/{id}', 'AdminController@getEditTable');
 		Route::post('/table/edit/{id}', 'AdminController@postEditTable');
+		Route::get('/table/booktable', 'AdminController@getListBookTable');
+		Route::get('/booktable/accept/{id}', 'AdminController@getAcceptBookTable');
+		Route::get('/booktable/cancel/{id}', 'AdminController@getCancelBookTable');
+
+		// manager receive
+		Route::get('/receive/list', 'AdminController@getListReceive');
+		Route::get('/receive/delete/{id}', 'AdminController@getDeleteReceive');
+		Route::post('/receive/add', 'AdminController@postAddReceive');
+
+		// manager timekeeping
+		Route::get('/timekeeping/list', 'AdminController@getListTimeKeeping');
+		Route::get('/timekeeping/delete/{id}', 'AdminController@getDeleteTimeKeeping');
+		Route::post('/timekeeping/add', 'AdminController@postAddTimeKeeping');
+
+		//manage order
+		Route::get('/order/list', 'AdminController@getListOrder');
+		Route::get('/order/view/{id}', 'AdminController@getViewOrder');
+		Route::get('/order/accept/{id}', 'AdminController@getAcceptOrder');
+		Route::get('/order/cancel/{id}', 'AdminController@getCancelOrder');
 	});
+
 });
 
 // Client
@@ -55,10 +75,21 @@ Route::post('/register', 'ClientController@postRegister');
 Route::get('/logout', 'ClientController@getLogout');
 Route::get('/product-detail/{id}', 'ClientController@getProductDetails');
 Route::post('/comment/{id}', 'ClientController@postComment');
+Route::get('/sales-off', 'ClientController@getSaleOff');
+Route::get('/introduce', 'ClientController@getIntroduce');
+Route::post('/booktable', 'ClientController@postBookTable');
 // cart
 Route::get('add-to-cart/{id}', [
 	'as'=>'addcart',
 	'uses'=>'ClientController@getAddtoCart'
+]);
+Route::get('add-multiple-cart/{id}', [
+	'as'=>'addmultiplecart',
+	'uses'=>'ClientController@getAddMultipletoCart'
+]);
+Route::get('update-cart', [
+	'as'=>'updatecart',
+	'uses'=>'ClientController@getUpdateCart'
 ]);
 Route::get('del-cart/{id}', [
 	'as'=>'delete-cart',
@@ -67,3 +98,5 @@ Route::get('del-cart/{id}', [
 Route::get('cart', 'ClientController@getCart');
 Route::get('search-product', 'ClientController@getsearchProduct');
 Route::get('product/{id}', 'ClientController@getProductByCategory');
+Route::get('checkout', 'ClientController@getCheckout');
+Route::post('accept-order-online', 'ClientController@postAcceptOrderOnline');

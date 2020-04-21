@@ -5,7 +5,7 @@
 	<!-- Breadcrumbs-->
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="#">Dashboard</a>
+			<a href="/admin/index">Dashboard</a>
 		</li>
 		<li class="breadcrumb-item active">Sửa sản phẩm</li>
 	</ol>
@@ -38,13 +38,17 @@
 						<label>Loại Sản phẩm:</label>
 						<select name="id_category" class="form-control validate">
 							@foreach($category as $c)
+							@if($c->id == $product->id )
+							<option value="{{$c->id}}" selected>{{$c->name}}</option>
+							@else
 							<option value="{{$c->id}}">{{$c->name}}</option>
+							@endif
 							@endforeach
 						</select>
 					</div>
 					<div class="form-group">
 						<label>Sản Phẩm:</label>
-						<input type="text" name="product_name" class="form-control validate" required="">
+						<input type="text" value="{{$product->product_name}}" name="product_name" class="form-control validate" required="">
 					</div>
 					<div class="form-group">
 						<label>Ảnh:</label><br>
@@ -52,19 +56,19 @@
 					</div>
 					<div class="form-group">
 						<label>Giá Sản Phẩm:</label>
-						<input type="number" name="unit_price" class="form-control validate" required="">
+						<input type="number" value="{{$product->unit_price}}" name="unit_price" class="form-control validate" required="">
 					</div>
 					<div class="form-group">
 						<label>Giá KM (nếu có):</label>
-						<input type="number" name="promotion_price" class="form-control validate">
+						<input type="number" value="{{$product->promotion_price}}" name="promotion_price" class="form-control validate">
 					</div>
 					<div class="form-group">
 						<label>Số Lượng:</label>
-						<input type="text" name="unit" class="form-control validate" required="">
+						<input type="text" name="unit" value="{{$product->unit}}" class="form-control validate" required="">
 					</div>
 					<div class="form-group">
 						<label>Mô tả:</label>
-						<textarea class="form-control" rows="3" name="description"></textarea>
+						<textarea class="form-control" rows="3" name="description">{{$product->description}}</textarea>
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-primary">Update</button>

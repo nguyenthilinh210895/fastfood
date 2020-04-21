@@ -40,6 +40,7 @@
 						</div>
 					</div>
 					<div class="control-group">
+						<input type="hidden" value="0" name="reg">
 						<input tabindex="3" class="btn btn-primary large" type="submit" value="Đăng Nhập">
 						<hr>
 						<p class="reset">Recover your <a tabindex="4" href="#" title="Recover your username or password">username or password</a></p>
