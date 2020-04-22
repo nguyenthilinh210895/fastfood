@@ -100,3 +100,4 @@ Route::get('search-product', 'ClientController@getsearchProduct');
 Route::get('product/{id}', 'ClientController@getProductByCategory');
 Route::get('checkout', 'ClientController@getCheckout');
 Route::post('accept-order-online', 'ClientController@postAcceptOrderOnline');
+Route::post('accept-order-offline', 'ClientController@postAcceptOrderOffline');

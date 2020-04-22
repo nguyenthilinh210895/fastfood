@@ -268,6 +268,55 @@ class ClientController extends Controller
         }
 	}
 
+	public function postAcceptOrderOffline(Request $req){
+		// check table
+		$table = Table::where('code', $req->code)->first();
+		if(!$table){
+			return redirect()->back()->with('error', 'code bàn không tồn tại, vui lòng thử lại');
+		}
+		// transaction
+		DB::beginTransaction();
+		try {
+			// save customer
+			$customer = new Customer();
+			$customer->name = $req->name;
+			$customer->email = $req->email;
+			$customer->phone = $req->phone;
+			$customer->address = 'Bàn:'.$table->table_name;
+			$customer->note = $req->note;
+			$customer->save();
+
+			// save order
+			$order = new Order();
+			$order->total_price = Session::get('checkout')->total_price;
+			$order->payment = 'Thanh Toán khi nhận hàng';
+			$order->status = 0;
+			$order->note = $req->note;
+			$order->type_order = Session::get('checkout')->book_type;
+			$order->delete_flag = 0;
+			$order->id_customer = $customer->id;
+			$order->save();
+
+			$cart = Session::get('cart');
+			foreach($cart->items as $key => $value){
+				$orderDetails = new OrderDetails();
+				$orderDetails->id_order = $order->id;
+				$orderDetails->id_product = $key;
+				$orderDetails->unit_price = $value['price']/$value['qty'];
+				$orderDetails->quantity = $value['qty'];
+				$orderDetails->save();
+			}
+			Session::forget('cart');
+			Session::forget('checkout');
+			DB::commit();
+			return view('client.checkout.complete');
+		}
+		catch (Exception $e) {
+            DB::rollBack();
+            return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
+        }
+	}
+
 	// sale off
 	public function getSaleOff(){
 		$product = Product::where('promotion_price', '<>', 'null')->paginate(6);
