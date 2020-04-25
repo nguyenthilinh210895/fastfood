@@ -18,6 +18,7 @@ use App\BookTable;
 use Session;
 use DB;
 use Carbon\Carbon;
+use App\NL_CheckOutV3;
 
 class ClientController extends Controller
 {
@@ -218,6 +219,29 @@ class ClientController extends Controller
 
     // accept order
 	public function postAcceptOrderOnline(Request $req){
+		$totalPrice = Session::get('checkout')->total_price;
+		// Ngân Lượng
+		$urlApi = env('URL_API');
+		$receive = env('RECEIVER');
+		$mechantID  = env('MERCHANT_ID');
+		$mechantPass = env('MERCHANT_PASS');
+		$nlcheckout = new NL_CheckOutV3($mechantID, $mechantPass, $receive, $urlApi);
+		$return_url = 'http://localhost:8000/checkout-success';
+		// $return_url = 'http://localhost/nganluong.vn/checkoutv3/payment_success.php';
+		$cancel_url = 'http://localhost:8000/checkout?total_price=' . $totalPrice . '&book_type=1';
+		$payment_type ='';
+		$discount_amount =0;
+		$order_description='';
+		$tax_amount=0;
+		$fee_shipping=0;
+		$bankCode = $req->bankcode;
+		$order_code ="macode_".time();
+		$array_items[0]= array('item_name1' => 'FastFood',
+					 'item_quantity1' => 1,
+					 'item_amount1' => $totalPrice,
+					 'item_url1' => 'http://nganluong.vn/');
+		$array_items=array();
+					 	
 		$user = User::where('id', Auth::user()->id)->first();
 		// transaction
 		DB::beginTransaction();
@@ -233,14 +257,27 @@ class ClientController extends Controller
 
 			// save order
 			$order = new Order();
-			$order->total_price = Session::get('checkout')->total_price;
-			if($req->payment == 1){
-				$order->payment = 'Thanh Toán qua ngân lượng';
-				$order->status = 1;
-			}
-			else{
+			$order->total_price = $totalPrice;
+			if($req->option_payment == 2){
 				$order->payment = 'Thanh Toán khi nhận hàng';
 				$order->status = 0;
+			}
+			else if($req->option_payment == 'ATM_ONLINE'){
+				$nl_result= $nlcheckout->BankCheckout($order_code,$totalPrice,$bankCode,$payment_type, $req->note,$tax_amount,
+					$fee_shipping,$discount_amount,$return_url,$cancel_url,$req->name,$req->email,$req->phone, 
+					$req->address, $array_items);
+				if ($nl_result->error_code =='00'){
+					$order->payment = 'Thanh Toán ATM';
+					$order->status = 1;
+				}
+			}
+			else if($req->option_payment == 'VISA'){
+				$nl_result = $nlcheckout->VisaCheckout($order_code, $totalPrice, $payment_type, $req->note, $tax_amount, $fee_shipping, $discount_amount, $return_url, $cancel_url, $req->name, $req->email, $req->phone, 
+					$req->address, $array_items, $bankCode);
+				if ($nl_result->error_code =='00'){
+					$order->payment = 'Thanh Toán Visa';
+					$order->status = 1;
+				}
 			}
 			$order->note = $req->note;
 			$order->type_order = Session::get('checkout')->book_type;
@@ -260,12 +297,13 @@ class ClientController extends Controller
 			Session::forget('cart');
 			Session::forget('checkout');
 			DB::commit();
+			return redirect((string)$nl_result->checkout_url);
 			return view('client.checkout.complete');
 		}
 		catch (Exception $e) {
-            DB::rollBack();
-            return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
-        }
+			DB::rollBack();
+			return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
+		}
 	}
 
 	public function postAcceptOrderOffline(Request $req){
@@ -312,9 +350,9 @@ class ClientController extends Controller
 			return view('client.checkout.complete');
 		}
 		catch (Exception $e) {
-            DB::rollBack();
-            return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
-        }
+			DB::rollBack();
+			return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
+		}
 	}
 
 	// sale off
@@ -361,8 +399,8 @@ class ClientController extends Controller
 			return redirect('/introduce')->with('message', 'Đã đặt bàn, chúng tôi sẽ liên hệ lại với bạn sau ít phút');
 		}
 		catch (Exception $e) {
-            DB::rollBack();
-            return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
-        }
+			DB::rollBack();
+			return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
+		}
 	}
 }
