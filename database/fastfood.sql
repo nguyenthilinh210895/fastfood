@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 23, 2020 lúc 05:49 PM
+-- Thời gian đã tạo: Th4 30, 2020 lúc 02:02 AM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -122,7 +122,8 @@ CREATE TABLE `customer` (
 INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `note`, `created_at`, `updated_at`) VALUES
 (1, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Tạ Quang Bửu', 'Giao Hàng sớm nha', '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
 (5, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn A001', 'Chúng tôi có 5 người', '2020-04-18 11:50:16', '2020-04-18 11:50:16'),
-(6, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn:Bàn A02', '123123', '2020-04-22 15:02:02', '2020-04-22 15:02:02');
+(6, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn:Bàn A02', '123123', '2020-04-22 15:02:02', '2020-04-22 15:02:02'),
+(49, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Hai Bà Tưng', 'ABC', '2020-04-25 10:50:59', '2020-04-25 10:50:59');
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,8 @@ CREATE TABLE `order` (
 
 INSERT INTO `order` (`id`, `total_price`, `payment`, `note`, `status`, `type_order`, `id_table`, `delete_flag`, `id_customer`, `created_at`, `updated_at`, `id_staff`, `status_staff`) VALUES
 (1, 261450.00, 'Thanh Toán khi nhận hàng', 'Giao Hàng sớm nha', 1, 1, NULL, 0, 1, '2020-04-18 02:46:14', '2020-04-19 08:26:45', 1, 1),
-(2, 72450.00, 'Thanh Toán khi nhận hàng', '123123', 0, 2, NULL, 0, 6, '2020-04-22 15:02:02', '2020-04-22 15:02:02', NULL, 0);
+(2, 72450.00, 'Thanh Toán khi nhận hàng', '123123', 0, 2, NULL, 0, 6, '2020-04-22 15:02:02', '2020-04-22 15:02:02', NULL, 0),
+(12, 31500.00, 'Thanh Toán ATM', 'ABC', 1, 1, NULL, 0, 49, '2020-04-25 10:51:01', '2020-04-25 10:51:01', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -209,7 +211,8 @@ CREATE TABLE `orderdetails` (
 INSERT INTO `orderdetails` (`id`, `unit_price`, `quantity`, `id_order`, `id_product`, `created_at`, `updated_at`) VALUES
 (1, 129000.00, 1, 1, 9, '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
 (2, 120000.00, 1, 1, 14, '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
-(3, 69000.00, 1, 2, 8, '2020-04-22 15:02:02', '2020-04-22 15:02:02');
+(3, 69000.00, 1, 2, 8, '2020-04-22 15:02:02', '2020-04-22 15:02:02'),
+(13, 30000.00, 1, 12, 1, '2020-04-25 10:51:01', '2020-04-25 10:51:01');
 
 -- --------------------------------------------------------
 
@@ -487,7 +490,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -499,13 +502,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `product`

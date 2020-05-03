@@ -60,7 +60,9 @@
 							<h1 class="invoice-id">Hóa Đơn</h1>
 							<div class="date">Mã Hóa Đơn: #OD{{$order->id}}</div>
 							<div class="date">Ngày đặt: {{$order->created_at}}</div>
+							@if($order->staff)
 							<div class="date">Nhân Viên Duyệt: {{$order->staff->name}}</div>
+							@endif
 						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0">

@@ -13,6 +13,8 @@ use App\Order;
 use App\OrderDetails;
 use App\Receive;
 use App\TimeKeeping;
+use Carbon\Carbon;
+use DB;
 
 class AdminController extends Controller
 {
@@ -53,7 +55,24 @@ class AdminController extends Controller
 	}
 
 	public function getIndex(){
-		return view('admin.page.index');
+		// $now = Carbon::now();
+		// $dates = [];
+		// for($i=1; $i < $now->daysInMonth + 1; ++$i) {
+		// 	$dates[] = Carbon::createFromDate($now->year, $now->month, $i)->format('m-d');
+		// }
+
+		$days = 30;
+		$range = Carbon::now()->subDays($days);
+		$data = DB::table('order')
+		->where('created_at', '>=', $range)
+		->groupBy('date')
+		->orderBy('date', 'ASC')
+		->get([
+			DB::raw('Date(created_at) as date'),
+			DB::raw('SUM(total_price) as totalPrice')
+		])->toJson();
+		// dd($data);
+		return view('admin.page.index', compact('data'));
 	}
 
     // list staff
