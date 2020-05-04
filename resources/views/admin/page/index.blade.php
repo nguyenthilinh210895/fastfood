@@ -82,11 +82,64 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-chart-area"></i>
-		Doanh Thu Cửa Hàng</div>
+			Doanh Thu Cửa Hàng
+			<div style="float: right;">
+				<form action="/admin/search-statistical" method="get" enctype="multipart/form-data">
+					{!!csrf_field()!!}
+					<label>Từ:</label> <input type="date"  value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="start_date">
+					<label>Đến:</label> <input type="date"  value="<?php echo date('Y-m-d'); ?>" name="end_date">
+					<input type="submit" name="" class="btn btn-sm btn-primary" value="Xem">
+				</form>
+			</div>
+		</div>
 		<div class="card-body">
 			<canvas id="myAreaChart" width="100%" height="30"></canvas>
 		</div>
 		<!-- 	<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+	</div>
+
+	<!-- DataTables Example -->
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fas fa-table"></i>
+		Doanh số bán hàng của nhân viên</div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Position</th>
+							<th>Office</th>
+							<th>Age</th>
+							<th>Start date</th>
+							<th>Salary</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>Name</th>
+							<th>Position</th>
+							<th>Office</th>
+							<th>Age</th>
+							<th>Start date</th>
+							<th>Salary</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<tr>
+							<td>Donna Snider</td>
+							<td>Customer Support</td>
+							<td>New York</td>
+							<td>27</td>
+							<td>2011/01/25</td>
+							<td>$112,000</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 	</div>
 </div>
 <!-- /.container-fluid -->
@@ -109,19 +162,19 @@
 		data: {
 			labels: dateArray,
 			datasets: [{
-		      label: "Tổng",
-		      lineTension: 0.3,
-		      backgroundColor: "rgba(2,117,216,0.2)",
-		      borderColor: "rgba(2,117,216,1)",
-		      pointRadius: 5,
-		      pointBackgroundColor: "rgba(2,117,216,1)",
-		      pointBorderColor: "rgba(255,255,255,0.8)",
-		      pointHoverRadius: 5,
-		      pointHoverBackgroundColor: "rgba(2,117,216,1)",
-		      pointHitRadius: 50,
-		      pointBorderWidth: 2,
-		      data: countArray,
-		    }],
+				label: "Tổng",
+				lineTension: 0.3,
+				backgroundColor: "rgba(2,117,216,0.2)",
+				borderColor: "rgba(2,117,216,1)",
+				pointRadius: 5,
+				pointBackgroundColor: "rgba(2,117,216,1)",
+				pointBorderColor: "rgba(255,255,255,0.8)",
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(2,117,216,1)",
+				pointHitRadius: 50,
+				pointBorderWidth: 2,
+				data: countArray,
+			}],
 		},
 		options: {
 			scales: {

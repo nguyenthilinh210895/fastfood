@@ -64,6 +64,9 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/order/view/{id}', 'AdminController@getViewOrder');
 		Route::get('/order/accept/{id}', 'AdminController@getAcceptOrder');
 		Route::get('/order/cancel/{id}', 'AdminController@getCancelOrder');
+
+		// search statistical
+		Route::get('/search-statistical', 'AdminController@getSearchStatistical');
 	});
 
 });

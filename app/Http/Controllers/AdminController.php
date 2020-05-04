@@ -75,6 +75,22 @@ class AdminController extends Controller
 		return view('admin.page.index', compact('data'));
 	}
 
+	public function getSearchStatistical(Request $req){
+		$start = Carbon::createFromFormat('Y-m-d', $req->start_date);
+		$end = Carbon::createFromFormat('Y-m-d', $req->end_date);
+		$data = DB::table('order')
+		->where('created_at', '>=', $start)
+		->where('created_at', '<=', $end)
+		->groupBy('date')
+		->orderBy('date', 'ASC')
+		->get([
+			DB::raw('Date(created_at) as date'),
+			DB::raw('SUM(total_price) as totalPrice')
+		])->toJson();
+		// dd($data);
+		return view('admin.page.index', compact('data'));
+	}
+
     // list staff
 	public function getListStaff(){
 		$staff = User::where('delete_flag', 0)
