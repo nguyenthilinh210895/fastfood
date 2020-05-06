@@ -23,12 +23,6 @@
 		</div>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="/admin/staff/list">
-			<i class="fas fa-user-ninja"></i>
-			<span>Quản Lý Nhân Viên</span>
-		</a>
-	</li>
-	<li class="nav-item">
 		<a class="nav-link" href="/admin/product/list">
 			<i class="fas fa-hamburger"></i>
 			<span>Quản Lý Sản Phẩm</span>
@@ -46,10 +40,18 @@
 			<span>Nhập hàng</span>
 		</a>
 	</li>
+	@if(Auth::user()->role == 1)
+	<li class="nav-item">
+		<a class="nav-link" href="/admin/staff/list">
+			<i class="fas fa-user-ninja"></i>
+			<span>Quản Lý Nhân Viên</span>
+		</a>
+	</li>
 	<li class="nav-item">
 		<a class="nav-link" href="/admin/timekeeping/list">
 			<i class="fas fa-fw fa-table"></i>
 			<span>Nghỉ Phép - Làm Bù</span>
 		</a>
 	</li>
+	@endif
 </ul>

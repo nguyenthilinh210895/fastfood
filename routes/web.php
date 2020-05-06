@@ -16,6 +16,7 @@ Route::get('/', 'ClientController@getIndex');
 
 Route::get('admin/login', 'AdminController@getLogin');
 Route::post('admin/login', 'AdminController@postLogin');
+Route::get('admin/logout', 'AdminController@getLogout');
 Route::middleware(['adminLogin'])->group(function () {
 	Route::group(['prefix' => 'admin'], function () {
 		Route::get('/index', 'AdminController@getIndex');
@@ -67,6 +68,9 @@ Route::middleware(['adminLogin'])->group(function () {
 
 		// search statistical
 		Route::get('/search-statistical', 'AdminController@getSearchStatistical');
+
+		// search revenue
+		Route::get('/search-revenue', 'AdminController@getSearchRevenue');
 	});
 
 });

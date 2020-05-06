@@ -18,6 +18,16 @@ use DB;
 
 class AdminController extends Controller
 {
+	function __construct(){
+        $countOrder  = Order::where('status_staff', 0)->count();
+        $countTable = BookTable::where('status', 0)->count();
+        $countMember = User::where('role', 0)->count();
+        $countStaff = User::where('role', 2)->count();
+        
+        view()->share(['countOrder'=>$countOrder, 'countTable'=>$countTable, 'countMember'=>$countMember, 'countStaff'=> $countStaff
+        ]);
+    }
+
 	public function getLogin(){
 		return view('admin.login');
 	}
@@ -72,7 +82,16 @@ class AdminController extends Controller
 			DB::raw('SUM(total_price) as totalPrice')
 		])->toJson();
 		// dd($data);
-		return view('admin.page.index', compact('data'));
+		$month = Carbon::now()->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+
+		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 
 	public function getSearchStatistical(Request $req){
@@ -88,7 +107,48 @@ class AdminController extends Controller
 			DB::raw('SUM(total_price) as totalPrice')
 		])->toJson();
 		// dd($data);
-		return view('admin.page.index', compact('data'));
+
+		$month = Carbon::now()->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
+	}
+
+	public function getSearchRevenue(Request $req){
+		$days = 30;
+		$range = Carbon::now()->subDays($days);
+		$data = DB::table('order')
+		->where('created_at', '>=', $range)
+		->groupBy('date')
+		->orderBy('date', 'ASC')
+		->get([
+			DB::raw('Date(created_at) as date'),
+			DB::raw('SUM(total_price) as totalPrice')
+		])->toJson();
+		// dd($data);
+		$month = Carbon::now()->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+
+		$month = $req->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 
     // list staff
