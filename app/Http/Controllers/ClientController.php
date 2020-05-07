@@ -19,6 +19,7 @@ use Session;
 use DB;
 use Carbon\Carbon;
 use App\NL_CheckOutV3;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -402,5 +403,66 @@ class ClientController extends Controller
 			DB::rollBack();
 			return redirect('/')->with('error', 'Có Lỗi Xảy Ra, Vui Lòng Thử Lại!');
 		}
+	}
+
+	public function getInfo(){
+		return view('client.info');
+	}
+
+	public function postInfo(Request $req){
+		$user = User::where('id',Auth::user()->id)->first();
+		$user->name = $req->name;
+		$user->phone = $req->phone;
+	 	$user->address = $req->address;
+	 	if($req->hasFile('avatar')){
+			$file = $req->file('avatar');
+			$duoi = $file->getClientOriginalExtension();
+			if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg')
+			{
+				return redirect()->back()->with('message', 'File ảnh không đúng định dạng');
+			}
+			$name = $file->getClientOriginalName();
+			$image = str_random(5)."_".$name;
+			while(file_exists("img/".$image))
+			{   
+				$image = str_random(5)."_".$name;
+			}
+			$file->move('img/', $image);    
+			$user->avatar = $image;
+		}
+		else{
+			$user->avatar = $user->avatar;
+		}
+		$user->save();
+		return redirect()->back()->with('message', 'Đã Cập Nhật');
+	}
+
+	public function getChangePass(){
+		return view('client.change-pass');
+	}
+
+	public function postChangePass(Request $req){
+		$user = User::where('id', Auth::user()->id)->first();
+		if(!Hash::check($req->oldPass, $user->password)){
+			return redirect()->back()->with('error', 'Nhập Mật Khẩu Cũ không chính xác');
+		}
+		if($req->newPass != $req->rePass){
+			return redirect()->back()->with('error', 'Mật Khẩu Mới Không Khớp');
+		}
+		$user->password = \Hash::make($req->newPass);
+		$user->save();
+		return redirect()->back()->with('message', 'Đã Đổi Mật Khẩu');
+	}
+
+	public function getHistoryOrder(){
+		$customer = Customer::where('email',  Auth::user()->email)->select('id')->get();
+		$order = Order::whereIn('id_customer', $customer)->get();
+		return view('client.history', compact('order'));
+	}
+
+	public function getBill($id){
+		$order = Order::where('id', $id)->first();
+		$order_details = OrderDetails::where('id_order',$id)->get();
+		return view('client.order.view', compact('order', 'order_details'));
 	}
 }

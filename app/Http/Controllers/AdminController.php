@@ -494,4 +494,37 @@ class AdminController extends Controller
 		$time->save();
 		return redirect()->back()->with('message', 'Đã Nhập');
 	}
+
+	// info
+	public function getInfo(){
+		return view('admin.info.info');
+	}
+
+	public function postInfo(Request $req){
+		$user = User::where('id',Auth::user()->id)->first();
+		$user->name = $req->name;
+		$user->phone = $req->phone;
+	 	$user->address = $req->address;
+	 	if($req->hasFile('avatar')){
+			$file = $req->file('avatar');
+			$duoi = $file->getClientOriginalExtension();
+			if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg')
+			{
+				return redirect()->back()->with('message', 'File ảnh không đúng định dạng');
+			}
+			$name = $file->getClientOriginalName();
+			$image = str_random(5)."_".$name;
+			while(file_exists("img/".$image))
+			{   
+				$image = str_random(5)."_".$name;
+			}
+			$file->move('img/', $image);    
+			$user->avatar = $image;
+		}
+		else{
+			$user->avatar = $user->avatar;
+		}
+		$user->save();
+		return redirect()->back()->with('message', 'Đã Cập Nhật');
+	}
 }

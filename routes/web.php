@@ -71,6 +71,10 @@ Route::middleware(['adminLogin'])->group(function () {
 
 		// search revenue
 		Route::get('/search-revenue', 'AdminController@getSearchRevenue');
+
+		// info
+		Route::get('/info', 'AdminController@getInfo');
+		Route::post('/info/edit', 'AdminController@postInfo');
 	});
 
 });
@@ -111,3 +115,10 @@ Route::post('accept-order-offline', 'ClientController@postAcceptOrderOffline');
 Route::get('/checkout-success', function(){
 	return view('/client.checkout.complete');
 });
+
+route::get('/info', 'ClientController@getInfo');
+route::post('/update-info', 'ClientController@postInfo');
+Route::get('/change-password', 'ClientController@getChangePass');
+Route::post('/change-password', 'ClientController@postChangePass');
+Route::get('/history-order', 'ClientController@getHistoryOrder');
+Route::get('/order/view/{id}', 'ClientController@getBill');

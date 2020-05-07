@@ -38,7 +38,7 @@
 				Xin chào: {{Auth::user()->name}} <i class="fas fa-user-circle fa-fw"></i>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="#">Thông tin cá nhân</a>
+				<a class="dropdown-item" href="/admin/info">Thông tin cá nhân</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Đăng Xuất</a>
 			</div>

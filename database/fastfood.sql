@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 04, 2020 lúc 05:28 PM
+-- Thời gian đã tạo: Th5 07, 2020 lúc 05:26 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -184,9 +184,9 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`id`, `total_price`, `payment`, `note`, `status`, `type_order`, `id_table`, `delete_flag`, `id_customer`, `created_at`, `updated_at`, `id_staff`, `status_staff`) VALUES
-(1, 261450.00, 'Thanh Toán khi nhận hàng', 'Giao Hàng sớm nha', 1, 1, NULL, 0, 1, '2020-04-18 02:46:14', '2020-04-19 08:26:45', 1, 1),
+(1, 261450.00, 'Thanh Toán khi nhận hàng', 'Giao Hàng sớm nha', 1, 1, NULL, 0, 1, '2020-05-18 02:46:14', '2020-04-19 08:26:45', 1, 1),
 (2, 72450.00, 'Thanh Toán khi nhận hàng', '123123', 0, 2, NULL, 0, 6, '2020-04-22 15:02:02', '2020-04-22 15:02:02', NULL, 0),
-(12, 31500.00, 'Thanh Toán ATM', 'ABC', 1, 1, NULL, 0, 49, '2020-04-25 10:51:01', '2020-04-25 10:51:01', NULL, 0);
+(12, 31500.00, 'Thanh Toán ATM', 'ABC', 1, 1, NULL, 0, 49, '2020-04-25 10:51:01', '2020-05-06 13:47:36', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -367,9 +367,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `address`, `email`, `password`, `avatar`, `salary`, `role`, `delete_flag`, `remember_token`, `created_at`, `updated_at`, `start_in`, `start_out`) VALUES
-(1, 'Admin', '0908909890', 'Trần duy hưng 2', 'admin@gmail.com', '$2y$10$sP5MM/kg0wolexzeNZgDs.Da1XMJugCds57EstBGc272vFZayNyWG', 'avatar.png', '500000000', 1, 0, NULL, '2020-04-04 01:11:33', '2020-04-04 03:25:54', NULL, NULL),
+(1, 'Admin', '0908909890', 'Trần duy hưng 2', 'admin@gmail.com', '$2y$10$sP5MM/kg0wolexzeNZgDs.Da1XMJugCds57EstBGc272vFZayNyWG', 'MZYpG_avatar (2).jpg', '500000000', 1, 0, NULL, '2020-04-04 01:11:33', '2020-05-07 13:11:18', NULL, NULL),
 (2, 'Phongbk', '0909090909', 'Hai Bà Tưng', 'phongbk@gmail.com', '$2y$10$tT0AdJug1f/.tujrIEMQAeA9bshzJ/33DT6JRAl9KtZZqpF96LYYm', 'avatar.png', NULL, 0, 0, NULL, '2020-04-05 07:41:49', '2020-04-05 07:41:49', NULL, NULL),
-(3, 'Nhân Viên B', '090909009', 'Đại Cồ Việt', 'nhanvienb@gmail.com', '$2y$10$mgAAwkjpP.WiRAQH1/b8LOQW9jTke0Ninl6aQUmr6UNGuEokZUpd2', 'avatar.png', '6500000', 2, 0, NULL, '2020-04-11 07:42:13', '2020-04-11 07:49:25', '07:35:00', '17:35:00');
+(3, 'Nhân Viên B', '090909009', 'Đại Cồ Việt', 'nhanvienb@gmail.com', '$2y$10$mgAAwkjpP.WiRAQH1/b8LOQW9jTke0Ninl6aQUmr6UNGuEokZUpd2', 'avatar.png', '6500000', 2, 0, NULL, '2020-04-11 07:42:13', '2020-04-11 07:49:25', '07:35:00', '17:35:00'),
+(4, 'ducbka', '0333333333', 'Hà Nội', 'ducbka@gmail.com', '$2y$10$U4Wy4/BuUBW5uttiZ5pMG.nVu63dN40MsL0BDE86siUaHanIXC9ea', 'ASfHn_avatar.jpg', NULL, 0, 0, NULL, '2020-05-07 13:15:02', '2020-05-07 14:57:22', NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -538,7 +539,7 @@ ALTER TABLE `timekeeping`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
