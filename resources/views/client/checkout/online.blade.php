@@ -67,13 +67,13 @@
 										<div class="control-group">
 											<label class="control-label">Số Điện Thoại (*)</label>
 											<div class="controls">
-												<input type="number" name="phone" required="" class="input-xlarge">
+												<input type="number" value="{{Auth::user()->phone}}" name="phone" required="" class="input-xlarge">
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">Địa Chỉ Nhận Hàng (*)</label>
 											<div class="controls">
-												<textarea class="input-xlarge" name="address" required=""></textarea>
+												<textarea class="input-xlarge" name="address" required="">{{Auth::user()->address}}</textarea>
 											</div>
 										</div>
 									</div>
@@ -93,20 +93,78 @@
 									</div>
 									<div class="control-group">
 										<h4>Phương Thức Thanh Toán?</h4>
-										<label class="radio">
-											<input type="radio" name="payment" id="optionsRadios1" value="1" checked="">
-											Online
-										</label>
-										<label class="radio">
-											<input type="radio" name="payment" id="optionsRadios2" value="2">
-											Thanh toán khi nhận hàng
-										</label>
+										<ul class="list-checkout">
+											<li>
+												<label>
+													<input type="radio" name="option_payment" value="2" checked> Thanh toán khi nhận hàng
+												</label>
+											</li>
+											<li>
+												<label><input type="radio" value="ATM_ONLINE" name="option_payment">	 Thanh toán online bằng thẻ ngân hàng nội địa</label>
+												<div class="boxContent">
+													<p>
+														<i>
+															<span style="color:#ff5a00;font-weight:bold;text-decoration:underline;">Lưu ý</span>
+														: Bạn cần đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực hiện.</i>
+													</p>
+
+													<ul class="cardList clearfix">
+														<li class="bank-online-methods ">
+															<label for="vcb_ck_on">
+																<i class="BIDV" title="Ngân hàng TMCP Đầu tư &amp; Phát triển Việt Nam"></i>
+																<input type="radio" value="BIDV" name="bankcode" >
+															</label>
+														</li>
+														<li class="bank-online-methods ">
+															<label for="vcb_ck_on">
+																<i class="VCB" title="Ngân hàng TMCP Ngoại Thương Việt Nam"></i>
+																<input type="radio" value="VCB"  name="bankcode" >
+															</label>
+														</li>
+														<li class="bank-online-methods ">
+															<label for="sml_atm_bab_ck_on">
+																<i class="TPB" title="Tền phong bank"></i>
+																<input type="radio" value="TPB"  name="bankcode" >
+															</label>
+														</li>
+														<li class="bank-online-methods ">
+															<label for="sml_atm_exb_ck_on">
+																<i class="EXB" title="Ngân hàng Xuất Nhập Khẩu"></i>
+																<input type="radio" value="EXB"  name="bankcode" >
+
+															</label>
+														</li>
+													</ul>
+												</div>
+											</li>
+											<li>
+												<label><input type="radio" value="VISA" name="option_payment" selected="true">  Thanh toán bằng thẻ Visa hoặc MasterCard</label>
+												<div class="boxContent">
+													<p><span style="color:#ff5a00;font-weight:bold;text-decoration:underline;">Lưu ý</span>:Visa hoặc MasterCard.</p>
+													<ul class="cardList clearfix">
+														<li class="bank-online-methods ">
+															<label for="vcb_ck_on">
+																Visa:
+																<input type="radio" value="VISA"  name="bankcode" >
+
+															</label>
+														</li>
+
+														<li class="bank-online-methods ">
+															<label for="vnbc_ck_on">
+																Master:<input type="radio" value="MASTER"  name="bankcode" >
+															</label>
+														</li>
+													</ul>	
+												</div>
+											</li>
+										</ul>
 									</div>
 
 									<div class="control-group">
 										<label for="textarea" class="control-label">Ghi Chú</label>
 										<div class="controls">
-											<textarea rows="3" name="note" id="textarea" class="span12"></textarea>
+											<textarea rows="3" required="" name="note" id="textarea" class="span12"></textarea>
 										</div>
 									</div>
 									<div class="control-group">
@@ -122,4 +180,87 @@
 		</div>
 	</div>
 </section>	
+<script src="https://www.nganluong.vn/webskins/javascripts/jquery_min.js" type="text/javascript"></script>
+<script language="javascript">
+	$('input[name="option_payment"]').bind('click', function() {
+		$('.list-checkout li').removeClass('active');
+		$(this).parent().parent('li').addClass('active');
+	});		
+</script> 	
+<style>
+	
+	ul.bankList {
+		clear: both;
+		height: 202px;
+		width: 636px;
+	}
+	ul.bankList li {
+		list-style-position: outside;
+		list-style-type: none;
+		cursor: pointer;
+		float: left;
+		margin-right: 0;
+		padding: 5px 2px;
+		text-align: center;
+		width: 90px;
+	}
+	.list-checkout li {
+		list-style: none outside none;
+		margin: 0 0 10px;
+	}
+	
+	.list-checkout li .boxContent {
+		display: none;
+		width: 636px;
+		border:1px solid #cccccc;
+		padding:10px; 
+	}
+	.list-checkout li.active .boxContent {
+		display: block;
+	}
+	.list-checkout li .boxContent ul {
+		/*height:80px;*/
+	}
+	
+	i.VISA, i.MASTE, i.AMREX, i.JCB, i.VCB, i.TCB, i.MB, i.VIB, i.ICB, i.EXB, i.ACB, i.HDB, i.MSB, i.NVB, i.DAB, i.SHB, i.OJB, i.SEA, i.TPB, i.PGB, i.BIDV, i.AGB, i.SCB, i.VPB, i.VAB, i.GPB, i.SGB,i.NAB,i.BAB 
+	{ width:80px; height:30px; display:block; background:url(https://www.nganluong.vn/webskins/skins/nganluong/checkout/version3/images/bank_logo.png) no-repeat;}
+	i.MASTE { background-position:0px -31px}
+	i.AMREX { background-position:0px -62px}
+	i.JCB { background-position:0px -93px;}
+	i.VCB { background-position:0px -124px;}
+	i.TCB { background-position:0px -155px;}
+	i.MB { background-position:0px -186px;}
+	i.VIB { background-position:0px -217px;}
+	i.ICB { background-position:0px -248px;}
+	i.EXB { background-position:0px -279px;}
+	i.ACB { background-position:0px -310px;}
+	i.HDB { background-position:0px -341px;}
+	i.MSB { background-position:0px -372px;}
+	i.NVB { background-position:0px -403px;}
+	i.DAB { background-position:0px -434px;}
+	i.SHB { background-position:0px -465px;}
+	i.OJB { background-position:0px -496px;}
+	i.SEA { background-position:0px -527px;}
+	i.TPB { background-position:0px -558px;}
+	i.PGB { background-position:0px -589px;}
+	i.BIDV { background-position:0px -620px;}
+	i.AGB { background-position:0px -651px;}
+	i.SCB { background-position:0px -682px;}
+	i.VPB { background-position:0px -713px;}
+	i.VAB { background-position:0px -744px;}
+	i.GPB { background-position:0px -775px;}
+	i.SGB { background-position:0px -806px;}
+	i.NAB { background-position:0px -837px;}
+	i.BAB { background-position:0px -868px;}
+	
+	ul.cardList li {
+		cursor: pointer;
+		float: left;
+		margin-right: 0;
+		padding: 5px 4px;
+		text-align: center;
+	/*	width: 90px;*/
+	}
+
+</style>
 @endsection

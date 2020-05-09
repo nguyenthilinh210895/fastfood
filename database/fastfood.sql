@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 12, 2020 lúc 03:39 PM
+-- Thời gian đã tạo: Th5 07, 2020 lúc 05:26 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -32,11 +32,18 @@ CREATE TABLE `booktable` (
   `id` int(10) UNSIGNED NOT NULL,
   `note` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) DEFAULT NULL,
-  `day` datetime NOT NULL,
+  `id_table` int(10) UNSIGNED NOT NULL,
   `id_customer` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `booktable`
+--
+
+INSERT INTO `booktable` (`id`, `note`, `status`, `id_table`, `id_customer`, `created_at`, `updated_at`) VALUES
+(1, 'Chúng tôi có 5 người', 1, 1, 5, '2020-04-18 11:50:16', '2020-04-18 14:38:51');
 
 -- --------------------------------------------------------
 
@@ -61,7 +68,7 @@ INSERT INTO `category` (`id`, `name`, `type`, `delete_flag`, `created_at`, `upda
 (1, 'Món Ăn Từ Gà', 'Đồ Ăn', 0, '2020-04-04 08:51:09', '2020-04-04 08:51:09'),
 (2, 'Nước Ngọt', 'Đồ Uống', 0, '2020-04-11 01:03:37', '2020-04-11 01:03:37'),
 (3, 'Bia', 'Đồ Uống', 0, '2020-04-11 01:04:01', '2020-04-11 01:04:01'),
-(4, 'Món ăn từ cá', 'Đồ Ăn', 0, '2020-04-11 01:04:19', '2020-04-11 01:04:19'),
+(4, 'Hải Sản', 'Đồ Ăn', 0, '2020-04-11 01:04:19', '2020-04-11 01:04:19'),
 (5, 'Món ăn từ thịt bò', 'Đồ Ăn', 0, '2020-04-11 01:04:32', '2020-04-11 01:04:32'),
 (6, 'Đồ ăn vặt', 'Đồ Ăn', 0, '2020-04-11 01:04:45', '2020-04-11 01:04:45'),
 (7, 'Món tráng miệng', 'Đồ Ăn', 0, '2020-04-11 01:04:51', '2020-04-11 01:04:51'),
@@ -108,6 +115,16 @@ CREATE TABLE `customer` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `customer`
+--
+
+INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `note`, `created_at`, `updated_at`) VALUES
+(1, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Tạ Quang Bửu', 'Giao Hàng sớm nha', '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
+(5, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn A001', 'Chúng tôi có 5 người', '2020-04-18 11:50:16', '2020-04-18 11:50:16'),
+(6, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn:Bàn A02', '123123', '2020-04-22 15:02:02', '2020-04-22 15:02:02'),
+(49, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Hai Bà Tưng', 'ABC', '2020-04-25 10:50:59', '2020-04-25 10:50:59');
+
 -- --------------------------------------------------------
 
 --
@@ -134,10 +151,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2020_03_26_143522_create_table_customer_table', 2),
 (18, '2020_03_27_143106_create_table_order_table', 2),
 (19, '2020_03_27_143939_create_table_orderdetails_table', 2),
-(20, '2020_03_29_105914_create_table_booktable_table', 2),
-(21, '2020_03_29_110704_create_table_receive_table', 2),
 (22, '2020_04_05_084956_update_users_table', 3),
-(23, '2020_04_05_091507_create_timekeeping_table', 4);
+(28, '2020_03_29_105914_create_table_booktable_table', 4),
+(29, '2020_03_29_110704_create_table_receive_table', 4),
+(30, '2020_04_05_091507_create_timekeeping_table', 4),
+(32, '2020_04_19_144706_update_order_table', 5);
 
 -- --------------------------------------------------------
 
@@ -156,8 +174,19 @@ CREATE TABLE `order` (
   `delete_flag` int(11) NOT NULL DEFAULT '0' COMMENT '0: Chưa Xóa; 1: đã xóa',
   `id_customer` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `id_staff` int(11) DEFAULT NULL,
+  `status_staff` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `order`
+--
+
+INSERT INTO `order` (`id`, `total_price`, `payment`, `note`, `status`, `type_order`, `id_table`, `delete_flag`, `id_customer`, `created_at`, `updated_at`, `id_staff`, `status_staff`) VALUES
+(1, 261450.00, 'Thanh Toán khi nhận hàng', 'Giao Hàng sớm nha', 1, 1, NULL, 0, 1, '2020-05-18 02:46:14', '2020-04-19 08:26:45', 1, 1),
+(2, 72450.00, 'Thanh Toán khi nhận hàng', '123123', 0, 2, NULL, 0, 6, '2020-04-22 15:02:02', '2020-04-22 15:02:02', NULL, 0),
+(12, 31500.00, 'Thanh Toán ATM', 'ABC', 1, 1, NULL, 0, 49, '2020-04-25 10:51:01', '2020-05-06 13:47:36', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -174,6 +203,16 @@ CREATE TABLE `orderdetails` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `orderdetails`
+--
+
+INSERT INTO `orderdetails` (`id`, `unit_price`, `quantity`, `id_order`, `id_product`, `created_at`, `updated_at`) VALUES
+(1, 129000.00, 1, 1, 9, '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
+(2, 120000.00, 1, 1, 14, '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
+(3, 69000.00, 1, 2, 8, '2020-04-22 15:02:02', '2020-04-22 15:02:02'),
+(13, 30000.00, 1, 12, 1, '2020-04-25 10:51:01', '2020-04-25 10:51:01');
 
 -- --------------------------------------------------------
 
@@ -218,7 +257,15 @@ INSERT INTO `product` (`id`, `product_name`, `image`, `unit_price`, `promotion_p
 (4, '7 up', '75UKh_nuoc-ngot-7up-sleek-330ml-1_grande (1).jpg', 10000.00, NULL, 500, '7up ngon, có gas', 0, 2, '2020-04-11 01:32:31', '2020-04-11 01:32:31'),
 (5, 'Mirinda', 'bDP89_169f3e3dd7cb294daa1cbe3725afa16f.jpg', 11000.00, NULL, 500, 'Mirinda ngon ngọt.', 0, 2, '2020-04-11 01:40:03', '2020-04-11 01:40:03'),
 (6, 'Sinh tố xoài', 'ssYvs_cach-lam-sinh-to-xoai-sua-dac.jpg', 20000.00, NULL, 500, 'Sinh tố xoài, nhiều dưỡng chất ngon lành, thành khiết.', 0, 8, '2020-04-11 01:40:58', '2020-04-11 01:40:58'),
-(7, 'Sinh tố dâu tây', '1NlkB_tải xuống.jpg', 35000.00, NULL, 500, 'Sinh tố nhiều dĩnh dưỡng', 0, 8, '2020-04-11 01:41:46', '2020-04-11 01:41:46');
+(7, 'Sinh tố dâu tây', '1NlkB_tải xuống.jpg', 35000.00, NULL, 500, 'Sinh tố nhiều dĩnh dưỡng', 0, 8, '2020-04-11 01:41:46', '2020-04-11 01:41:46'),
+(8, 'Cánh gà xào tỏi', 'nHxh8_cuoi-tuan-me-lam-canh-ga-chien-bo-don-gian-ngon-mieng-400-43940213121.jpg', 69000.00, NULL, 1000, 'Cánh gà ta, thơm ngon, hấp dẫn', 0, 1, '2020-04-13 06:36:25', '2020-04-13 06:36:25'),
+(9, 'Cá Hôi', 'tsUXy_dinh_duong_ca_hoi_pkbh.jpg', 129000.00, NULL, 1000, 'Cá Hồi tươi ngon, hấp dẫn', 0, 1, '2020-04-13 06:38:28', '2020-04-13 06:38:28'),
+(10, 'Pizza hải sản', 'zIn02_BYO_Large_1684x1114.jpg', 119000.00, 99000.00, 1000, 'Pizza thơm ngon, hấp dẫn', 0, 6, '2020-04-13 06:41:08', '2020-04-13 06:41:08'),
+(11, 'Khoai Lang Kén', 'ojuTu_tải xuống (1).jpg', 35000.00, NULL, 1000, 'Khoai lang kén, thơm ngon, hấp dẫn', 0, 6, '2020-04-13 06:42:26', '2020-04-13 06:42:26'),
+(12, 'Bắp bò xào dứa', 'tn5zJ_tải xuống (2).jpg', 145000.00, NULL, 1000, 'Bắp bò tươi ngon, hương vị hấp dẫn', 0, 5, '2020-04-13 06:43:47', '2020-04-13 06:43:47'),
+(13, 'Súp gà', 'TZgCx_sup-tom-bap-600x400.jpg', 30000.00, NULL, 1000, 'Súp tráng miệng ngon cực.', 0, 7, '2020-04-13 06:46:00', '2020-04-13 06:46:00'),
+(14, 'Mực trứng chiên', 'qLis9_cach-lam-muc-trung-chien-gion-1.jpg', 120000.00, NULL, 500, 'Mực ngon tuyệt', 0, 4, '2020-04-13 06:47:42', '2020-04-13 06:47:42'),
+(15, 'Ngao Hấp', '1xnSl_3-cach-lam-ngao-ngheu-hap-thom-ngon-la-mieng-voi-bia-trai-dua-khom--sa-ot.jpg', 60000.00, NULL, 1000, 'Ngao hấp thơm ngon', 0, 4, '2020-04-13 06:48:28', '2020-04-13 06:48:28');
 
 -- --------------------------------------------------------
 
@@ -237,6 +284,13 @@ CREATE TABLE `receive` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `receive`
+--
+
+INSERT INTO `receive` (`id`, `name`, `unit`, `price`, `total_price`, `day`, `created_at`, `updated_at`) VALUES
+(1, 'Coca cola', '500', 20000.00, 10000000.00, '2020-04-18', '2020-04-18 15:27:14', '2020-04-18 15:27:14');
+
 -- --------------------------------------------------------
 
 --
@@ -250,17 +304,18 @@ CREATE TABLE `tables` (
   `status` int(11) NOT NULL COMMENT '0: còn trống; 1: đã đặt',
   `delete_flag` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `QR_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tables`
 --
 
-INSERT INTO `tables` (`id`, `table_name`, `code`, `status`, `delete_flag`, `created_at`, `updated_at`) VALUES
-(1, 'Bàn A001', '1231231', 0, 0, '2020-04-11 04:03:34', '2020-04-12 06:36:20'),
-(2, 'Bàn A02', 'abcaaa', 0, 1, '2020-04-11 04:05:42', '2020-04-11 04:10:16'),
-(3, 'Bàn A02', 'abcaaa', 0, 0, '2020-04-11 04:10:23', '2020-04-11 04:10:23');
+INSERT INTO `tables` (`id`, `table_name`, `code`, `status`, `delete_flag`, `created_at`, `updated_at`, `QR_code`) VALUES
+(1, 'Bàn A001', '1231231', 0, 0, '2020-04-11 04:03:34', '2020-04-18 14:38:48', NULL),
+(2, 'Bàn A02', 'abcaaa', 0, 1, '2020-04-11 04:05:42', '2020-04-11 04:10:16', NULL),
+(3, 'Bàn A02', 'abcaaa', 0, 0, '2020-04-11 04:10:23', '2020-04-11 04:10:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -275,6 +330,13 @@ CREATE TABLE `timekeeping` (
   `id_staff_absent` int(10) UNSIGNED NOT NULL,
   `id_staff_replace` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `timekeeping`
+--
+
+INSERT INTO `timekeeping` (`id`, `date`, `delete_flag`, `id_staff_absent`, `id_staff_replace`) VALUES
+(1, '2020-04-18', 0, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -305,9 +367,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `address`, `email`, `password`, `avatar`, `salary`, `role`, `delete_flag`, `remember_token`, `created_at`, `updated_at`, `start_in`, `start_out`) VALUES
-(1, 'Admin', '0908909890', 'Trần duy hưng 2', 'admin@gmail.com', '$2y$10$sP5MM/kg0wolexzeNZgDs.Da1XMJugCds57EstBGc272vFZayNyWG', 'avatar.png', '500000000', 1, 0, NULL, '2020-04-04 01:11:33', '2020-04-04 03:25:54', NULL, NULL),
+(1, 'Admin', '0908909890', 'Trần duy hưng 2', 'admin@gmail.com', '$2y$10$sP5MM/kg0wolexzeNZgDs.Da1XMJugCds57EstBGc272vFZayNyWG', 'MZYpG_avatar (2).jpg', '500000000', 1, 0, NULL, '2020-04-04 01:11:33', '2020-05-07 13:11:18', NULL, NULL),
 (2, 'Phongbk', '0909090909', 'Hai Bà Tưng', 'phongbk@gmail.com', '$2y$10$tT0AdJug1f/.tujrIEMQAeA9bshzJ/33DT6JRAl9KtZZqpF96LYYm', 'avatar.png', NULL, 0, 0, NULL, '2020-04-05 07:41:49', '2020-04-05 07:41:49', NULL, NULL),
-(3, 'Nhân Viên B', '090909009', 'Đại Cồ Việt', 'nhanvienb@gmail.com', '$2y$10$mgAAwkjpP.WiRAQH1/b8LOQW9jTke0Ninl6aQUmr6UNGuEokZUpd2', 'avatar.png', '6500000', 2, 0, NULL, '2020-04-11 07:42:13', '2020-04-11 07:49:25', '07:35:00', '17:35:00');
+(3, 'Nhân Viên B', '090909009', 'Đại Cồ Việt', 'nhanvienb@gmail.com', '$2y$10$mgAAwkjpP.WiRAQH1/b8LOQW9jTke0Ninl6aQUmr6UNGuEokZUpd2', 'avatar.png', '6500000', 2, 0, NULL, '2020-04-11 07:42:13', '2020-04-11 07:49:25', '07:35:00', '17:35:00'),
+(4, 'ducbka', '0333333333', 'Hà Nội', 'ducbka@gmail.com', '$2y$10$U4Wy4/BuUBW5uttiZ5pMG.nVu63dN40MsL0BDE86siUaHanIXC9ea', 'ASfHn_avatar.jpg', NULL, 0, 0, NULL, '2020-05-07 13:15:02', '2020-05-07 14:57:22', NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -318,6 +381,7 @@ INSERT INTO `users` (`id`, `name`, `phone`, `address`, `email`, `password`, `ava
 --
 ALTER TABLE `booktable`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `booktable_id_table_foreign` (`id_table`),
   ADD KEY `booktable_id_customer_foreign` (`id_customer`);
 
 --
@@ -409,7 +473,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `booktable`
 --
 ALTER TABLE `booktable`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `category`
@@ -427,37 +491,37 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `receive`
 --
 ALTER TABLE `receive`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `tables`
@@ -469,13 +533,13 @@ ALTER TABLE `tables`
 -- AUTO_INCREMENT cho bảng `timekeeping`
 --
 ALTER TABLE `timekeeping`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -485,7 +549,8 @@ ALTER TABLE `users`
 -- Các ràng buộc cho bảng `booktable`
 --
 ALTER TABLE `booktable`
-  ADD CONSTRAINT `booktable_id_customer_foreign` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `booktable_id_customer_foreign` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `booktable_id_table_foreign` FOREIGN KEY (`id_table`) REFERENCES `tables` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `comment`

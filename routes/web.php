@@ -16,6 +16,7 @@ Route::get('/', 'ClientController@getIndex');
 
 Route::get('admin/login', 'AdminController@getLogin');
 Route::post('admin/login', 'AdminController@postLogin');
+Route::get('admin/logout', 'AdminController@getLogout');
 Route::middleware(['adminLogin'])->group(function () {
 	Route::group(['prefix' => 'admin'], function () {
 		Route::get('/index', 'AdminController@getIndex');
@@ -64,6 +65,16 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/order/view/{id}', 'AdminController@getViewOrder');
 		Route::get('/order/accept/{id}', 'AdminController@getAcceptOrder');
 		Route::get('/order/cancel/{id}', 'AdminController@getCancelOrder');
+
+		// search statistical
+		Route::get('/search-statistical', 'AdminController@getSearchStatistical');
+
+		// search revenue
+		Route::get('/search-revenue', 'AdminController@getSearchRevenue');
+
+		// info
+		Route::get('/info', 'AdminController@getInfo');
+		Route::post('/info/edit', 'AdminController@postInfo');
 	});
 
 });
@@ -100,3 +111,14 @@ Route::get('search-product', 'ClientController@getsearchProduct');
 Route::get('product/{id}', 'ClientController@getProductByCategory');
 Route::get('checkout', 'ClientController@getCheckout');
 Route::post('accept-order-online', 'ClientController@postAcceptOrderOnline');
+Route::post('accept-order-offline', 'ClientController@postAcceptOrderOffline');
+Route::get('/checkout-success', function(){
+	return view('/client.checkout.complete');
+});
+
+route::get('/info', 'ClientController@getInfo');
+route::post('/update-info', 'ClientController@postInfo');
+Route::get('/change-password', 'ClientController@getChangePass');
+Route::post('/change-password', 'ClientController@postChangePass');
+Route::get('/history-order', 'ClientController@getHistoryOrder');
+Route::get('/order/view/{id}', 'ClientController@getBill');

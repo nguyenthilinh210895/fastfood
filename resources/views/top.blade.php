@@ -42,7 +42,7 @@
 						@endif
 					</li>	
 					@if(Auth::user())	
-					<li>Xin chào: <a href="#">{{Auth::user()->name}}</a></li>			
+					<li>Xin chào: <a href="/info">{{Auth::user()->name}}</a></li>			
 					<li><a href="/logout">Đăng Xuất</a></li>
 					@else
 					<li><a href="/login">Đăng Nhập</a></li>

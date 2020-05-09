@@ -13,9 +13,21 @@ use App\Order;
 use App\OrderDetails;
 use App\Receive;
 use App\TimeKeeping;
+use Carbon\Carbon;
+use DB;
 
 class AdminController extends Controller
 {
+	function __construct(){
+        $countOrder  = Order::where('status_staff', 0)->count();
+        $countTable = BookTable::where('status', 0)->count();
+        $countMember = User::where('role', 0)->count();
+        $countStaff = User::where('role', 2)->count();
+        
+        view()->share(['countOrder'=>$countOrder, 'countTable'=>$countTable, 'countMember'=>$countMember, 'countStaff'=> $countStaff
+        ]);
+    }
+
 	public function getLogin(){
 		return view('admin.login');
 	}
@@ -53,7 +65,90 @@ class AdminController extends Controller
 	}
 
 	public function getIndex(){
-		return view('admin.page.index');
+		// $now = Carbon::now();
+		// $dates = [];
+		// for($i=1; $i < $now->daysInMonth + 1; ++$i) {
+		// 	$dates[] = Carbon::createFromDate($now->year, $now->month, $i)->format('m-d');
+		// }
+
+		$days = 30;
+		$range = Carbon::now()->subDays($days);
+		$data = DB::table('order')
+		->where('created_at', '>=', $range)
+		->groupBy('date')
+		->orderBy('date', 'ASC')
+		->get([
+			DB::raw('Date(created_at) as date'),
+			DB::raw('SUM(total_price) as totalPrice')
+		])->toJson();
+		// dd($data);
+		$month = Carbon::now()->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+
+		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
+	}
+
+	public function getSearchStatistical(Request $req){
+		$start = Carbon::createFromFormat('Y-m-d', $req->start_date);
+		$end = Carbon::createFromFormat('Y-m-d', $req->end_date);
+		$data = DB::table('order')
+		->where('created_at', '>=', $start)
+		->where('created_at', '<=', $end)
+		->groupBy('date')
+		->orderBy('date', 'ASC')
+		->get([
+			DB::raw('Date(created_at) as date'),
+			DB::raw('SUM(total_price) as totalPrice')
+		])->toJson();
+		// dd($data);
+
+		$month = Carbon::now()->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
+	}
+
+	public function getSearchRevenue(Request $req){
+		$days = 30;
+		$range = Carbon::now()->subDays($days);
+		$data = DB::table('order')
+		->where('created_at', '>=', $range)
+		->groupBy('date')
+		->orderBy('date', 'ASC')
+		->get([
+			DB::raw('Date(created_at) as date'),
+			DB::raw('SUM(total_price) as totalPrice')
+		])->toJson();
+		// dd($data);
+		$month = Carbon::now()->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+
+		$month = $req->month;
+		$year = Carbon::now()->year;
+		$revenue = Order::where('id_staff', '<>', null)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 
     // list staff
@@ -398,5 +493,38 @@ class AdminController extends Controller
 		$time->id_staff_replace = $req->staff_replace;
 		$time->save();
 		return redirect()->back()->with('message', 'Đã Nhập');
+	}
+
+	// info
+	public function getInfo(){
+		return view('admin.info.info');
+	}
+
+	public function postInfo(Request $req){
+		$user = User::where('id',Auth::user()->id)->first();
+		$user->name = $req->name;
+		$user->phone = $req->phone;
+	 	$user->address = $req->address;
+	 	if($req->hasFile('avatar')){
+			$file = $req->file('avatar');
+			$duoi = $file->getClientOriginalExtension();
+			if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg')
+			{
+				return redirect()->back()->with('message', 'File ảnh không đúng định dạng');
+			}
+			$name = $file->getClientOriginalName();
+			$image = str_random(5)."_".$name;
+			while(file_exists("img/".$image))
+			{   
+				$image = str_random(5)."_".$name;
+			}
+			$file->move('img/', $image);    
+			$user->avatar = $image;
+		}
+		else{
+			$user->avatar = $user->avatar;
+		}
+		$user->save();
+		return redirect()->back()->with('message', 'Đã Cập Nhật');
 	}
 }

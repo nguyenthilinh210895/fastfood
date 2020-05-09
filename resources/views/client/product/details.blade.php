@@ -14,8 +14,8 @@
 					<address>
 						<strong>Loại sản phẩm:</strong> <span>{{$product->category->name}}</span><br>
 						<strong>Sản Phẩm:</strong> <span>{{$product->product_name}}</span><br>
-						<strong>Reward Points:</strong> <span>0</span><br>
-						<strong>Availability:</strong> <span>Out Of Stock</span><br>								
+						<!-- <strong>Reward Points:</strong> <span>0</span><br>
+						<strong>Availability:</strong> <span>Out Of Stock</span><br>	 -->							
 					</address>
 					@if($product->promotion_price != null)
 					<h4><strong>
@@ -150,7 +150,7 @@
 				</ul>
 				<br/>
 			</div>
-			<div class="block">								
+			<!-- <div class="block">								
 				<h4 class="title"><strong>Best</strong> Seller</h4>								
 				<ul class="small-product">
 					<li>
@@ -172,7 +172,7 @@
 						<a href="#">Fusce id molestie massa</a>
 					</li>   
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </section>	

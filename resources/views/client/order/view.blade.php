@@ -1,14 +1,6 @@
-@extends('admin.master')
+@extends('master')
 @section('content')
 <div class="container-fluid">
-	<!-- Breadcrumbs-->
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item">
-			<a href="/admin/index">Trang Chủ</a>
-		</li>
-		<li class="breadcrumb-item active">Hóa Đơn</li>
-	</ol>
-
 	<div id="invoice">
 		<div class="toolbar hidden-print">
 			<div class="text-right">

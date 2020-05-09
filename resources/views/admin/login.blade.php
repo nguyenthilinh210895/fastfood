@@ -60,10 +60,10 @@
 					</div>
 					<input type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" name="">
 				</form>
-				<div class="text-center">
+				<!-- <div class="text-center">
 					<a class="d-block small mt-3" href="register.html">Register an Account</a>
 					<a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
