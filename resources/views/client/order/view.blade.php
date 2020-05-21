@@ -80,15 +80,7 @@
 							@endforeach
 						</tbody>
 						<tfoot>
-							<tr>
-								<td colspan="2"></td>
-							</tr>
-							<tr>
-								<td colspan="2"></td>
-							</tr>
-							<tr>
-								<td colspan="2"></td>
-							</tr>
+							
 							<tr>
 								<td colspan="2"></td>
 							</tr>
@@ -96,6 +88,10 @@
 								<td colspan="2"></td>
 							</tr>
 						</tfoot>
+					</table>
+					<table>
+						<tr><span>Ghi Chú:</span></tr>
+						<tr><p>{{$order->note}}</p></tr>
 					</table>
 				</main>
 				<footer>
