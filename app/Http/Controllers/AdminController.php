@@ -90,7 +90,6 @@ class AdminController extends Controller
 					->select('id_staff', DB::raw("SUM(total_price) as total"))
 					->orderBy('total')
 					->get();
-
 		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 

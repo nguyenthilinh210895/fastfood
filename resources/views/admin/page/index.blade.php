@@ -91,7 +91,6 @@
 	var data = {!! $data !!};
 	var dateArray = data.map(function (el) { return el.date; });
 	var countArray = data.map(function (el) { return el.totalPrice; });
-	console.log(countArray);
 
 	// Set new default font family and font color to mimic Bootstrap's default styling
 	Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -134,7 +133,7 @@
 				yAxes: [{
 					ticks: {
 						min: 0,
-						max: 400000,
+						max: 2000000,
 						maxTicksLimit: 10
 					},
 					gridLines: {
