@@ -84,12 +84,23 @@ class AdminController extends Controller
 		// dd($data);
 		$month = Carbon::now()->month;
 		$year = Carbon::now()->year;
-		$revenue = Order::where('id_staff', '<>', null)
+		if(Auth::user()->role == 1){
+			$revenue = Order::where('id_staff', '<>', null)
+			->whereMonth('created_at', '=', $month)
+			->groupBy('id_staff')
+			->select('id_staff', DB::raw("SUM(total_price) as total"))
+			->orderBy('total')
+			->get();
+		}
+		else{
+			$revenue = Order::where('id_staff',  Auth::user()->id)
 					->whereMonth('created_at', '=', $month)
 					->groupBy('id_staff')
 					->select('id_staff', DB::raw("SUM(total_price) as total"))
 					->orderBy('total')
 					->get();
+		}
+
 		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 
@@ -109,12 +120,23 @@ class AdminController extends Controller
 
 		$month = Carbon::now()->month;
 		$year = Carbon::now()->year;
-		$revenue = Order::where('id_staff', '<>', null)
-					->whereMonth('created_at', '=', $month)
-					->groupBy('id_staff')
-					->select('id_staff', DB::raw("SUM(total_price) as total"))
-					->orderBy('total')
-					->get();
+		if(Auth::user()->role == 1){
+			$revenue = Order::where('id_staff', '<>', null)
+			->whereMonth('created_at', '=', $month)
+			->groupBy('id_staff')
+			->select('id_staff', DB::raw("SUM(total_price) as total"))
+			->orderBy('total')
+			->get();
+		}
+		else{
+			$revenue = Order::where('id_staff', Auth::user()->id)
+			->whereMonth('created_at', '=', $month)
+			->groupBy('id_staff')
+			->select('id_staff', DB::raw("SUM(total_price) as total"))
+			->orderBy('total')
+			->get();
+		}
+		
 		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 
@@ -141,12 +163,22 @@ class AdminController extends Controller
 
 		$month = $req->month;
 		$year = Carbon::now()->year;
-		$revenue = Order::where('id_staff', '<>', null)
+		if(Auth::user()->role == 1){
+			$revenue = Order::where('id_staff', '<>', null)
 					->whereMonth('created_at', '=', $month)
 					->groupBy('id_staff')
 					->select('id_staff', DB::raw("SUM(total_price) as total"))
 					->orderBy('total')
 					->get();
+		}
+		else{
+			$revenue = Order::where('id_staff',  Auth::user()->id)
+					->whereMonth('created_at', '=', $month)
+					->groupBy('id_staff')
+					->select('id_staff', DB::raw("SUM(total_price) as total"))
+					->orderBy('total')
+					->get();
+		}
 		return view('admin.page.index', compact('data', 'revenue', 'month', 'year'));
 	}
 

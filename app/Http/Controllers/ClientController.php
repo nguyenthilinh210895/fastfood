@@ -298,7 +298,9 @@ class ClientController extends Controller
 			Session::forget('cart');
 			Session::forget('checkout');
 			DB::commit();
-			return redirect((string)$nl_result->checkout_url);
+			if($req->option_payment != 2){
+				return redirect((string)$nl_result->checkout_url);
+			}
 			return view('client.checkout.complete');
 		}
 		catch (Exception $e) {
