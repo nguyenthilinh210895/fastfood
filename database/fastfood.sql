@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 07, 2020 lúc 05:26 PM
+-- Thời gian đã tạo: Th5 27, 2020 lúc 05:57 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -123,7 +123,12 @@ INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `note`, `crea
 (1, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Tạ Quang Bửu', 'Giao Hàng sớm nha', '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
 (5, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn A001', 'Chúng tôi có 5 người', '2020-04-18 11:50:16', '2020-04-18 11:50:16'),
 (6, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Bàn:Bàn A02', '123123', '2020-04-22 15:02:02', '2020-04-22 15:02:02'),
-(49, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Hai Bà Tưng', 'ABC', '2020-04-25 10:50:59', '2020-04-25 10:50:59');
+(49, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Hai Bà Tưng', 'ABC', '2020-04-25 10:50:59', '2020-04-25 10:50:59'),
+(50, 'Phongbk', 'phongbk@gmail.com', '0909090909', 'Hai Bà Tưng', 'abc', '2020-05-11 13:29:16', '2020-05-11 13:29:16'),
+(51, 'ducbka', 'ducbka@gmail.com', '0333333333', 'Hà Nội', '1', '2020-05-21 14:23:24', '2020-05-21 14:23:24'),
+(52, 'ducbka', 'ducbka@gmail.com', '0333333333', 'Hà Nội', 'test', '2020-05-21 14:26:41', '2020-05-21 14:26:41'),
+(53, 'Avenger End Game', 'ducbka@gmail.com', '0909090909', 'Bàn:Bàn A001', '1231', '2020-05-21 14:39:11', '2020-05-21 14:39:11'),
+(54, 'ducbka', 'ducbka@gmail.com', '0333333333', 'Hà Nội', 'abc', '2020-05-21 14:41:29', '2020-05-21 14:41:29');
 
 -- --------------------------------------------------------
 
@@ -186,7 +191,12 @@ CREATE TABLE `order` (
 INSERT INTO `order` (`id`, `total_price`, `payment`, `note`, `status`, `type_order`, `id_table`, `delete_flag`, `id_customer`, `created_at`, `updated_at`, `id_staff`, `status_staff`) VALUES
 (1, 261450.00, 'Thanh Toán khi nhận hàng', 'Giao Hàng sớm nha', 1, 1, NULL, 0, 1, '2020-05-18 02:46:14', '2020-04-19 08:26:45', 1, 1),
 (2, 72450.00, 'Thanh Toán khi nhận hàng', '123123', 0, 2, NULL, 0, 6, '2020-04-22 15:02:02', '2020-04-22 15:02:02', NULL, 0),
-(12, 31500.00, 'Thanh Toán ATM', 'ABC', 1, 1, NULL, 0, 49, '2020-04-25 10:51:01', '2020-05-06 13:47:36', 1, 1);
+(12, 31500.00, 'Thanh Toán ATM', 'ABC', 1, 1, NULL, 0, 49, '2020-04-25 10:51:01', '2020-05-06 13:47:36', 1, 1),
+(13, 31500.00, 'Thanh Toán ATM', 'abc', 1, 1, NULL, 0, 50, '2020-05-11 13:29:17', '2020-05-11 13:29:17', NULL, 0),
+(14, 72450.00, 'Thanh Toán ATM', '1', 1, 1, NULL, 0, 51, '2020-05-21 14:23:25', '2020-05-21 14:23:25', NULL, 0),
+(15, 135450.00, 'Thanh Toán ATM', 'test', 1, 1, NULL, 0, 52, '2020-05-21 14:26:42', '2020-05-21 14:26:42', NULL, 0),
+(16, 217350.00, 'Thanh Toán khi nhận hàng', '1231', 1, 2, NULL, 0, 53, '2020-05-21 14:39:11', '2020-05-21 14:40:13', 1, 1),
+(17, 72450.00, 'Thanh Toán khi nhận hàng', 'abc', 0, 1, NULL, 0, 54, '2020-05-21 14:41:29', '2020-05-21 14:41:29', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -212,7 +222,12 @@ INSERT INTO `orderdetails` (`id`, `unit_price`, `quantity`, `id_order`, `id_prod
 (1, 129000.00, 1, 1, 9, '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
 (2, 120000.00, 1, 1, 14, '2020-04-18 02:46:14', '2020-04-18 02:46:14'),
 (3, 69000.00, 1, 2, 8, '2020-04-22 15:02:02', '2020-04-22 15:02:02'),
-(13, 30000.00, 1, 12, 1, '2020-04-25 10:51:01', '2020-04-25 10:51:01');
+(13, 30000.00, 1, 12, 1, '2020-04-25 10:51:01', '2020-04-25 10:51:01'),
+(14, 30000.00, 1, 13, 1, '2020-05-11 13:29:17', '2020-05-11 13:29:17'),
+(15, 69000.00, 1, 14, 8, '2020-05-21 14:23:25', '2020-05-21 14:23:25'),
+(16, 129000.00, 1, 15, 9, '2020-05-21 14:26:42', '2020-05-21 14:26:42'),
+(17, 69000.00, 3, 16, 8, '2020-05-21 14:39:11', '2020-05-21 14:39:11'),
+(18, 69000.00, 1, 17, 8, '2020-05-21 14:41:29', '2020-05-21 14:41:29');
 
 -- --------------------------------------------------------
 
@@ -491,7 +506,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -503,13 +518,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `product`

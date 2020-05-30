@@ -23,13 +23,10 @@
 		<li class="nav-item dropdown no-arrow mx-1">
 			<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-bell fa-fw"></i>
-				<span class="badge badge-danger" style="margin-left: -0.25rem">9+</span>
+				<span class="badge badge-danger" id="countOrder" style="margin-left: -0.25rem"></span>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-				<a class="dropdown-item" href="#">Action</a>
-				<a class="dropdown-item" href="#">Another action</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Something else here</a>
+				<a class="dropdown-item" href="/admin/order-review/list" id="linkOrderReview">Có đơn hàng mới</a>
 			</div>
 		</li>
 		
@@ -46,3 +43,29 @@
 	</ul>
 
 </nav>
+
+<script>
+$('document').ready(function () {
+ setInterval(function () {getCountOrder()}, 1000);//request every x seconds
+
+ }); 
+
+function getCountOrder() {
+	$.ajax({
+			url: "/admin/getCountOrder",
+			type: "GET",
+			data: {
+			},
+			cache: false,
+			success: function (data) {
+				$("#countOrder").html(data.countOrder);
+				if(data.countOrder == 0){
+					$('#linkOrderReview').hide();
+				}
+				else{
+					$('#linkOrderReview').show();
+				}
+			}
+		})
+	}
+</script>

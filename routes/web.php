@@ -65,6 +65,7 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/order/view/{id}', 'AdminController@getViewOrder');
 		Route::get('/order/accept/{id}', 'AdminController@getAcceptOrder');
 		Route::get('/order/cancel/{id}', 'AdminController@getCancelOrder');
+		Route::get('/order-review/list', 'AdminController@getListOrderReview');
 
 		// search statistical
 		Route::get('/search-statistical', 'AdminController@getSearchStatistical');
@@ -75,6 +76,8 @@ Route::middleware(['adminLogin'])->group(function () {
 		// info
 		Route::get('/info', 'AdminController@getInfo');
 		Route::post('/info/edit', 'AdminController@postInfo');
+
+		Route::get('/getCountOrder', 'AjaxController@getCountOrder');
 	});
 
 });
