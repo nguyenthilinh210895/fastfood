@@ -125,3 +125,6 @@ Route::get('/change-password', 'ClientController@getChangePass');
 Route::post('/change-password', 'ClientController@postChangePass');
 Route::get('/history-order', 'ClientController@getHistoryOrder');
 Route::get('/order/view/{id}', 'ClientController@getBill');
+
+//ajax
+Route::get('/ajax/add-to-card', 'AjaxController@getAddToCard');
