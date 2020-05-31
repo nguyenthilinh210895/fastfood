@@ -24,7 +24,6 @@
 	<script src="shopper/bootstrap/js/bootstrap.min.js"></script>				
 	<script src="shopper/themes/js/superfish.js"></script>	
 	<script src="shopper/themes/js/jquery.scrolltotop.js"></script>
-	<script src="/js/fastfood.js"></script>
 
 	<!-- QRjs -->
 	<script type="text/javascript" src="js/instascan.min.js"></script>
@@ -42,6 +41,7 @@
 		</div>
 		<script src="shopper/themes/js/common.js"></script>
 		<script src="shopper/themes/js/jquery.flexslider-min.js"></script>
+		<script src="/js/fastfood.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				$(document).ready(function() {

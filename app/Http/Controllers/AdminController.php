@@ -450,6 +450,15 @@ class AdminController extends Controller
 	public function getListOrder(){
 		$order = Order::where('delete_flag', 0)
 						->orderBy('status', 'asc')
+						->orderBy('status_staff', 'asc')
+						->orderBy('created_at', 'desc')->get();
+		return view('admin.order.list', compact('order'));
+	}
+
+	public function getListOrderReview(){
+		$order = Order::where('delete_flag', 0)
+						->where('status_staff', 0)
+						->orderBy('status', 'asc')
 						->orderBy('created_at', 'desc')->get();
 		return view('admin.order.list', compact('order'));
 	}

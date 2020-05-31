@@ -70,8 +70,9 @@ class ClientController extends Controller
 		}
 	}
 
-	public function getLogout(){
+	public function getLogout(Request $req){
 		Auth::logout();
+		$req->session()->forget('cart');
 		return redirect('/');
 	}
 

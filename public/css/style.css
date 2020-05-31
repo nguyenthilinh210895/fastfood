@@ -165,6 +165,12 @@
  .checkout:hover {
  	background-color: #494;
  }
+
+ #top-bar{
+	position: sticky;
+    top: 0;
+    z-index: 1000;
+ }
  /* Make adjustments for tablet */
  @media screen and (max-width: 650px) {
  	.shopping-cart {

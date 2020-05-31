@@ -9,7 +9,7 @@
 		<div class="span8">
 			<div class="account pull-right">
 				<ul class="user-menu">		
-					<li class="dropdown">
+					<li class="dropdown" id="cartSession">
 						@if(Session::has('cart'))
 						<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Giỏ hàng <span class="badge">{{$totalQty}}</span> <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
@@ -33,7 +33,6 @@
 									</div>
 								</div>
 							</li>
-							<hr>
 							@endforeach
 							<div>
 								<p style="margin-left: 10px;"> Tổng Tiền: {{number_format($totalPrice)}} VNĐ <a href="/cart" class="btn btn-primary">Xem giỏ hàng</a></p>

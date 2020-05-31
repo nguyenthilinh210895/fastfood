@@ -63,7 +63,7 @@
 											{{number_format($f->unit_price)}} VNĐ
 										</p>
 										@endif
-										<a href="{{route('addcart', $f->id)}}" class="btn btn-primary">Add Cart <i class="fas fa-cart-plus"></i></a>
+										<a onclick="addToCard({{$f->id}})" class="btn btn-primary">Add Cart <i class="fas fa-cart-plus"></i></a>
 									</div>
 								</li>
 								@endforeach
@@ -110,7 +110,7 @@
 											{{number_format($d->unit_price)}} VNĐ
 										</p>
 										@endif
-										<a href="{{route('addcart', $d->id)}}" class="btn btn-primary">Add Cart <i class="fas fa-cart-plus"></i></a>
+										<a onclick="addToCard({{$d->id}})" class="btn btn-primary">Add Cart <i class="fas fa-cart-plus"></i></a>
 									</div>
 								</li>
 								@endforeach
