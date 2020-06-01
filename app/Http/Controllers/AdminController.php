@@ -465,6 +465,14 @@ class AdminController extends Controller
 
 	public function getAcceptOrder($id){
 		$order = Order::where('id', $id)->first();
+		$order->status_staff = 1;
+		$order->id_staff = Auth::user()->id;
+		$order->save();
+		return redirect('/admin/order/list')->with('message', 'Đã duyệt');
+	}
+
+	public function getCompleteOrder($id){
+		$order = Order::where('id', $id)->first();
 		$order->status = 1;
 		$order->status_staff = 1;
 		$order->id_staff = Auth::user()->id;

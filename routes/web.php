@@ -64,6 +64,7 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/order/list', 'AdminController@getListOrder');
 		Route::get('/order/view/{id}', 'AdminController@getViewOrder');
 		Route::get('/order/accept/{id}', 'AdminController@getAcceptOrder');
+		Route::get('/order/complete/{id}', 'AdminController@getCompleteOrder');
 		Route::get('/order/cancel/{id}', 'AdminController@getCancelOrder');
 		Route::get('/order-review/list', 'AdminController@getListOrderReview');
 
