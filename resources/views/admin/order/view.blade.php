@@ -16,8 +16,10 @@
 					<i class="fa fa-print"></i> Print
 				</button>
 				@if($order->status_staff == 0)
-				<a href="/admin/order/accept/{{$order->id}}" title="Duyệt" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="btn btn-xs btn-primary"><i class="fas fa-check"></i> Hoàn Thành</a>
 				<a href="/admin/order/cancel/{{$order->id}}"  onclick="return confirm('Bạn chắc chắn muốn hủy?')" title="Cancel" class="btn btn-xs btn-danger"><i class="fas fa-window-close"></i> Hủy</a>
+				@endif
+				@if($order->status != 1)
+				<a href="/admin/order/complete/{{$order->id}}" title="Hoàn thành" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="btn btn-xs btn-primary"><i class="fas fa-check"></i> Hoàn Thành</a>
 				@endif
 			</div>
 			<hr>

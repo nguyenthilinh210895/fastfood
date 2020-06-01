@@ -99,10 +99,10 @@
 									</td>
 									<td>
 										<div class="btn-group" role="group">
-											<a href="/admin/order/view/{{$o->id}}" title="Xem" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+											<a href="/admin/order/view/{{$o->id}}" title="Xem" class="badge badge-xs badge-success"><i class="fas fa-eye"></i></a>
 											@if($o->status_staff == 0)
-											<a href="/admin/order/accept/{{$o->id}}" title="Duyệt" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="btn btn-xs btn-primary"><i class="fas fa-check"></i></a>
-											<a href="/admin/order/cancel/{{$o->id}}"  onclick="return confirm('Bạn chắc chắn muốn hủy?')" title="Cancel" class="btn btn-xs btn-danger"><i class="fas fa-window-close"></i></a>
+											<a href="/admin/order/accept/{{$o->id}}" title="Duyệt" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="badge badge-xs badge-primary"><i class="fas fa-check"></i></a>
+											<a href="/admin/order/cancel/{{$o->id}}"  onclick="return confirm('Bạn chắc chắn muốn hủy?')" title="Cancel" class="badge badge-xs badge-danger"><i class="fas fa-window-close"></i></a>
 											@endif
 										</div>
 									</td>
