@@ -77,9 +77,9 @@
 									<td>
 										@if($o->status_staff == 0)
 										<span class="badge badge-secondary">Chưa duyệt</span>
-										@elseif($o->status == 1)
+										@elseif($o->status_staff == 1)
 										<span class="badge badge-primary">Đã Duyệt</span>
-										@elseif($o->status == 2)
+										@elseif($o->status_staff == 2)
 										<span class="badge badge-danger">Hủy</span>
 										@endif
 									</td>
