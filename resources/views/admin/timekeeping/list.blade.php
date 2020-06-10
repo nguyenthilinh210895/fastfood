@@ -21,7 +21,8 @@
 				<div class="card-header">
 					<i class="fas fa-table"></i>
 					Danh Sách Nghỉ Phép - Làm Bù
-					<a class="btn btn-sm btn-primary right" data-toggle="modal" data-target="#modalAddTable" href="#">Thêm Mới</a>
+					<a class="btn btn-sm btn-success right" href="/admin/salary-staff">Xem bảng lương</a> 
+					<a class="btn btn-sm btn-primary right" data-toggle="modal" data-target="#modalAddTable" href="#">Thêm Mới</a> &nbsp;
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
