@@ -59,6 +59,10 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::get('/timekeeping/list', 'AdminController@getListTimeKeeping');
 		Route::get('/timekeeping/delete/{id}', 'AdminController@getDeleteTimeKeeping');
 		Route::post('/timekeeping/add', 'AdminController@postAddTimeKeeping');
+		Route::get('/salary-staff', 'AdminController@getSalaryStaff');
+		Route::get('/search-salary', 'AdminController@getSearchSalary');
+		Route::get('/befenit', 'AdminController@getBefenit');
+		Route::get('/search-befenit', 'AdminController@getSearchBefenit');
 
 		//manage order
 		Route::get('/order/list', 'AdminController@getListOrder');

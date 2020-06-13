@@ -575,4 +575,53 @@ class AdminController extends Controller
 		$user->save();
 		return redirect()->back()->with('message', 'Đã Cập Nhật');
 	}
+
+	public function getSalaryStaff(){
+		$staff = User::where('role', 2)->get();
+		foreach($staff as $st){
+			$countAbsent = TimeKeeping::where('id_staff_absent', $st->id)
+									->whereMonth('date', Carbon::now()->month)
+									->count('id');
+			$countReplace = TimeKeeping::where('id_staff_replace', $st->id)
+									->whereMonth('date', Carbon::now()->month)
+									->count('id');
+			$totalAbsent = $countAbsent * (($st->salary)/30);
+			$totalReplace = $countReplace * (($st->salary)/30);
+			$st->salary = $st->salary - $totalAbsent + $totalReplace;
+			$month = Carbon::now()->month;
+		}
+		return view('admin.timekeeping.salary', compact('staff', 'month'));
+	}
+
+	public function getSearchSalary(Request $req){
+		$staff = User::where('role', 2)->get();
+		$month = $req->month;
+		foreach($staff as $st){
+			$countAbsent = TimeKeeping::where('id_staff_absent', $st->id)
+									->whereMonth('date', $month)
+									->count('id');
+			$countReplace = TimeKeeping::where('id_staff_replace', $st->id)
+									->whereMonth('date', $month)
+									->count('id');
+			$totalAbsent = $countAbsent * (($st->salary)/30);
+			$totalReplace = $countReplace * (($st->salary)/30);
+			$st->salary = $st->salary - $totalAbsent + $totalReplace;
+			
+		}
+		return view('admin.timekeeping.salary', compact('staff', 'month'));
+	}
+
+	public function getBefenit(){
+		$month = Carbon::now()->month;
+		$r = Receive::whereMonth('created_at', $month)->sum('total_price');
+		$o = Order::whereMonth('created_at', $month)->where('status', 1)->sum('total_price');
+		return view('admin.page.befenit', compact('r', 'o', 'month'));
+	}
+
+	public function getSearchBefenit(request $req){
+		$month = $req->month;
+		$r = Receive::whereMonth('created_at', $month)->sum('total_price');
+		$o = Order::whereMonth('created_at', $month)->where('status', 1)->sum('total_price');
+		return view('admin.page.befenit', compact('r', 'o', 'month'));
+	}
 }
