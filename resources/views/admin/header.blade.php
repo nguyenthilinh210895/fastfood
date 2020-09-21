@@ -21,6 +21,16 @@
 	<!-- Navbar -->
 	<ul class="navbar-nav ml-auto ml-md-0">
 		<li class="nav-item dropdown no-arrow mx-1">
+			<a class="nav-link dropdown-toggle" href="#" id="alertsTable" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-fw fa-table"></i>
+				<span class="badge badge-danger" id="countTable" style="margin-left: -0.25rem"></span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsTable">
+				<a class="dropdown-item" href="/admin/table/booktable" id="linkTableReview">Có người đặt bàn</a>
+			</div>
+		</li>
+
+		<li class="nav-item dropdown no-arrow mx-1">
 			<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-bell fa-fw"></i>
 				<span class="badge badge-danger" id="countOrder" style="margin-left: -0.25rem"></span>
@@ -46,26 +56,45 @@
 
 <script>
 $('document').ready(function () {
- setInterval(function () {getCountOrder()}, 1000);//request every x seconds
-
+ setInterval(function () {getCountOrder()}, 1000);
+ setInterval(function () {getCountTable()}, 1000);
  }); 
 
 function getCountOrder() {
 	$.ajax({
-			url: "/admin/getCountOrder",
-			type: "GET",
-			data: {
-			},
-			cache: false,
-			success: function (data) {
-				$("#countOrder").html(data.countOrder);
-				if(data.countOrder == 0){
-					$('#linkOrderReview').hide();
-				}
-				else{
-					$('#linkOrderReview').show();
-				}
+		url: "/admin/getCountOrder",
+		type: "GET",
+		data: {
+		},
+		cache: false,
+		success: function (data) {
+			$("#countOrder").html(data.countOrder);
+			if(data.countOrder == 0){
+				$('#linkOrderReview').hide();
 			}
-		})
-	}
+			else{
+				$('#linkOrderReview').show();
+			}
+		}
+	})
+}
+
+function getCountTable() {
+	$.ajax({
+		url: "/admin/getCountTable",
+		type: "GET",
+		data: {
+		},
+		cache: false,
+		success: function (data) {
+			$("#countTable").html(data.countTable);
+			if(data.countTable == 0){
+				$('#linkTableReview').hide();
+			}
+			else{
+				$('#linkTableReview').show();
+			}
+		}
+	})
+}
 </script>

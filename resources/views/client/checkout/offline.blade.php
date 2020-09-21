@@ -22,19 +22,31 @@
 										<div class="control-group">
 											<label class="control-label">Họ Tên</label>
 											<div class="controls">
+												@if (!Auth::user())
 												<input type="text" name="name" placeholder="" class="input-xlarge" required="">
+												@else
+												<input type="text" name="name" placeholder="" class="input-xlarge" readonly required="" value = '{{Auth::user()->name}}'>
+												@endif
 											</div>
 										</div>		
 										<div class="control-group">
 											<label class="control-label">Email</label>
 											<div class="controls">
+											@if (!Auth::user())
 												<input type="email" name="email" placeholder="" class="input-xlarge" required="">
+											@else
+												<input type="email" name="email" placeholder="" class="input-xlarge" required="" value = '{{Auth::user()->email}}' readonly>
+											@endif
 											</div>
 										</div>	  
 										<div class="control-group">
 											<label class="control-label">Số Điện Thoại</label>
 											<div class="controls">
+											@if (!Auth::user())
 												<input type="number" name="phone" required="" placeholder="" class="input-xlarge">
+											@else
+												<input type="number" name="phone" required="" placeholder="" class="input-xlarge" value = '{{Auth::user()->phone}}' readonly>
+											@endif
 											</div>
 										</div>
 										<div class="control-group">
@@ -62,7 +74,7 @@
 												let resultado = document.getElementById("qrcode");
 												scanner.addListener("scan", function(content) {
 													resultado.value = content;
-													scanner.stop();
+													//scanner.stop();
 												});
 												Instascan.Camera.getCameras()
 												.then(function(cameras) {

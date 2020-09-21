@@ -144,7 +144,7 @@
 <div class="modal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form action="admin/category/add" method="post" enctype="multipart/form-data">
+			<form action="/admin/category/add" method="post" enctype="multipart/form-data">
 				{!!csrf_field()!!}
 				<div class="modal-header text-center">
 					<h4 class="modal-title w-100 font-weight-bold">Thêm Loại Hàng</h4>

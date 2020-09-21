@@ -4,12 +4,9 @@
 	<div id="invoice">
 		<div class="toolbar hidden-print">
 			<div class="text-right">
-				<button id="printInvoice" class="btn btn-info">
-					<i class="fa fa-print"></i> Print
-				</button>
+				
 				@if($order->status_staff == 0)
-				<a href="/admin/order/accept/{{$order->id}}" title="Duyệt" onclick="return confirm('Bạn chắc chắn đơn đã hoàn thành?')" class="btn btn-xs btn-primary"><i class="fas fa-check"></i> Hoàn Thành</a>
-				<a href="/admin/order/cancel/{{$order->id}}"  onclick="return confirm('Bạn chắc chắn muốn hủy?')" title="Cancel" class="btn btn-xs btn-danger"><i class="fas fa-window-close"></i> Hủy</a>
+				
 				@endif
 			</div>
 			<hr>

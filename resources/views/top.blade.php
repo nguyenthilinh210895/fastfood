@@ -3,7 +3,7 @@
 		<div class="span4">
 			<form method="GET" action="/search-product" class="search_form">
 				{!!csrf_field()!!}
-				<input type="text" name="key" class="input-block-level search-query" Placeholder="eg. Gà Quay...">
+				<input type="text" name="key" class="input-block-level search-query" Placeholder="vd. Gà Quay...">
 			</form>
 		</div>
 		<div class="span8">
@@ -20,7 +20,6 @@
 										<div style="float: left;">
 											<img src="img/{{$product['item']['image']}}" alt="" width="50" />
 										</div>
-										
 										<div class="item-info" style="float: left; padding-left: 10px;">
 											<b>{{$product['item']['product_name']}}</b>
 											<p>{{$product['qty']}} * @if($product['item']['promotion_price']!=0)

@@ -82,9 +82,9 @@
 			<div>
 				<h5>Thông tin liên hệ</h5>
 				<p>
-					<strong>Phone:</strong>&nbsp;(123) 456-7890<br>
-					<strong>Fax:</strong>&nbsp;+04 (123) 456-7890<br>
-					<strong>Email:</strong>&nbsp;<a href="#">fastfood@example.com</a>	
+					<strong>Phone:</strong>&nbsp;0976298379<br>
+					<strong>Facebook:</strong>&nbsp;<a href = 'http://facebook.com/phong.do.00' target='_blank'>http://facebook.com/phong.do.00</a><br>
+					<strong>Email:</strong>&nbsp;<a href="#">fastfoodbka@gmail.com</a>	
 					<strong>Địa Chỉ:</strong>&nbsp; Hai bà trưng - hà Nội<br>		
 				</p>
 				<br/>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\Product;
 use App\Cart;
+use App\BookTable;
 use Session;
 
 class AjaxController extends Controller
@@ -13,6 +14,11 @@ class AjaxController extends Controller
     public function getCountOrder(){
         $countOrder = Order::where('status_staff', 0)->count('id');
         return response()->json(array('countOrder'=> $countOrder), 200);
+    }
+
+    public function getCountTable(){
+        $countTable = BookTable::where('status', 0)->count('id');
+        return response()->json(array('countTable'=> $countTable), 200);
     }
 
     public function getAddToCard(Request $req){

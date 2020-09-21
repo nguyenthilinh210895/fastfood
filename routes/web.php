@@ -83,6 +83,7 @@ Route::middleware(['adminLogin'])->group(function () {
 		Route::post('/info/edit', 'AdminController@postInfo');
 
 		Route::get('/getCountOrder', 'AjaxController@getCountOrder');
+		Route::get('/getCountTable', 'AjaxController@getCountTable');
 	});
 
 });

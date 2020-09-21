@@ -186,6 +186,7 @@ class ClientController extends Controller
     //checkout
 	public function getCart(){
 		$category = Category::orderBy('created_at', 'desc')->take(10)->get();
+		// dd($category);
 		return view('client.cart', compact('category'));
 	}
 
@@ -228,9 +229,9 @@ class ClientController extends Controller
 		$mechantID  = env('MERCHANT_ID');
 		$mechantPass = env('MERCHANT_PASS');
 		$nlcheckout = new NL_CheckOutV3($mechantID, $mechantPass, $receive, $urlApi);
-		$return_url = 'http://localhost:8000/checkout-success';
-		// $return_url = 'http://localhost/nganluong.vn/checkoutv3/payment_success.php';
-		$cancel_url = 'http://localhost:8000/checkout?total_price=' . $totalPrice . '&book_type=1';
+		$return_url = 'http://localhost:8000/checkout-success';// neu thanh toan thanh cong thi tra ve url nay
+		//$cancel_url = 'http://localhost:8000/checkout?total_price=' . $totalPrice . '&book_type=1'; khi cancel thi quay lại trang nay
+		$cancel_url = 'http://localhost:8000';
 		$payment_type ='';
 		$discount_amount =0;
 		$order_description='';

@@ -41,6 +41,7 @@
 									<th>Tổng Tiền</th>
 									<th>Thanh toán</th>
 									<th>Trạng Thái</th>
+									<th>Nhân Viên</th>
 									<th>Loại Đơn</th>
 									<th>Địa Chỉ</th>
 									<th>Thao Tác</th>
@@ -54,6 +55,7 @@
 									<th>Tổng Tiền</th>
 									<th>Thanh toán</th>
 									<th>Trạng Thái</th>
+									<th>Nhân Viên</th>
 									<th>Loại Đơn</th>
 									<th>Địa Chỉ</th>
 									<th>Thao Tác</th>
@@ -81,6 +83,11 @@
 										<span class="badge badge-primary">Đã duyệt</span>
 										@elseif($o->status_staff == 2)
 										<span class="badge badge-danger">Đã hủy</span>
+										@endif
+									</td>
+									<td>
+										@if($o->staff)
+											{{$o->staff->name}}
 										@endif
 									</td>
 									<td>

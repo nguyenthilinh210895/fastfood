@@ -134,6 +134,13 @@
 
 															</label>
 														</li>
+														<li class="bank-online-methods ">
+															<label for="sml_atm_tcb_ck_on">
+																<i class="TCB" title="Ngân hàng Công thương"></i>
+																<input type="radio" value="TCB"  name="bankcode" >
+
+															</label>
+														</li>
 													</ul>
 												</div>
 											</li>

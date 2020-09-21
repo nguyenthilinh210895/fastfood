@@ -79,7 +79,7 @@
 			<div class="row">
 				<div class="span12">
 					<h4 class="title">
-						<span class="pull-left"><span class="text"><span class="line"><strong>Menu</strong>Đồ Uống</span></span></span>
+						<span class="pull-left"><span class="text"><span class="line"><strong>Menu </strong>Đồ Uống</span></span></span>
 					</h4>
 					<div class="myCarousel carousel slide">
 						
@@ -87,7 +87,7 @@
 							<ul class="thumbnails">	
 								@foreach($drink as $d)
 								<li class="span3">
-									<div class="product-box">
+									<div class="product-box" >
 										<span class="sale_tag"></span>
 										<p>
 											<a href="product-detail/{{$d->id}}">
@@ -110,14 +110,19 @@
 											{{number_format($d->unit_price)}} VNĐ
 										</p>
 										@endif
-										<a onclick="addToCard({{$d->id}})" class="btn btn-primary">Add Cart <i class="fas fa-cart-plus"></i></a>
+										
+										<div style='display: block ' class='nut-mua'>
+										<a  onclick="addToCard({{$d->id}})" class="btn btn-primary" >Add Cart <i class="fas fa-cart-plus"></i></a>
+										</div>
+										
+										
 									</div>
 								</li>
 								@endforeach
+							</ul>
 								<div class=" row pagination pagination-small pagination-centered"> 
 									{{ $drink->appends(array_except(Request::only('q'), 'page'))->links() }}
 								</div>
-							</ul>
 						</div>					
 					</div>
 				</div>						

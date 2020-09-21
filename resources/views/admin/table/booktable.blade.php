@@ -54,12 +54,14 @@
 							<tbody>
 								<?php $i = 0; ?>
 								@foreach($bookTable as $t)
+								
 								<tr>
+									
 									<td>{{++$i}}</td>
-									<td>{{$t->customer->name}}</td>
-									<td>{{$t->customer->email}}</td>
-									<td>{{$t->customer->phone}}</td>
-									<td>{{$t->table->table_name}}</td>
+									<td>{{$t->name}}</td>
+									<td>{{$t->email}}</td>
+									<td>{{$t->phone}}</td>
+									<td>{{$t->table_name}}</td>
 									<td>
 										<textarea rows="2" readonly="">{{$t->note}}</textarea>
 									</td>

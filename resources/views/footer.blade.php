@@ -26,27 +26,28 @@
 		<div class="span3">
 			<h4>Navigation</h4>
 			<ul class="nav">
-				<li><a href="./index.html">Homepage</a></li>  
-				<li><a href="./about.html">About Us</a></li>
-				<li><a href="./contact.html">Contac Us</a></li>
-				<li><a href="./cart.html">Your Cart</a></li>
-				<li><a href="./register.html">Login</a></li>							
+				<li><a href="/">Trang chủ</a></li>  
+				<li><a href="/introduce">Thông tin cửa hàng</a></li>
+				<li><a href="/sales-off">Giảm giá</a></li>
+				<li><a href="/cart">Giỏ hàng</a></li>
+				<li><a href="/login">Đăng nhập</a></li>							
 			</ul>					
 		</div>
 		<div class="span4">
-			<h4>My Account</h4>
+			<h4>Tôn chỉ</h4>
 			<ul class="nav">
-				<li><a href="#">My Account</a></li>
-				<li><a href="#">Order History</a></li>
-				<li><a href="#">Wish List</a></li>
-				<li><a href="#">Newsletter</a></li>
+				<li>Tâm huyết</li>
+				<li>Chất lượng</li>
+				<li>Thái độ</li>
+				<li>Vệ sinh</li>
+				<li>Khách hàng là số 1</li>
 			</ul>
 		</div>
 		<div class="span5">
 			<p class="logo"><img src="shopper/themes/images/logo.png" class="site_logo" alt=""></p>
 			<p>
 				Đại Học Bách Khoa Hà Nội <br>
-				Điện thoại: 1900000 Email: fastfood@gmail.vn
+				Điện thoại: 1900000 Email: fastfoodbka@gmail.vn
 			</p>
 			<br/>
 			<span class="social_icons">
@@ -59,5 +60,5 @@
 	</div>	
 </section>
 <section id="copyright">
-	<span>Copyright © FastFood 2020</span>
+	<span>copyright@Fastfood PhongDo 2020</span>
 </section>

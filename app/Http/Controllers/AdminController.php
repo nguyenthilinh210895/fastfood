@@ -87,6 +87,7 @@ class AdminController extends Controller
 		if(Auth::user()->role == 1){
 			$revenue = Order::where('id_staff', '<>', null)
 			->whereMonth('created_at', '=', $month)
+			->where('status_staff', '1')
 			->groupBy('id_staff')
 			->select('id_staff', DB::raw("SUM(total_price) as total"))
 			->orderBy('total')
@@ -94,6 +95,7 @@ class AdminController extends Controller
 		}
 		else{
 			$revenue = Order::where('id_staff',  Auth::user()->id)
+					->where('status_staff', '1')
 					->whereMonth('created_at', '=', $month)
 					->groupBy('id_staff')
 					->select('id_staff', DB::raw("SUM(total_price) as total"))
@@ -108,6 +110,7 @@ class AdminController extends Controller
 		$start = Carbon::createFromFormat('Y-m-d', $req->start_date);
 		$end = Carbon::createFromFormat('Y-m-d', $req->end_date);
 		$data = DB::table('order')
+		->where('status_staff', '1')
 		->where('created_at', '>=', $start)
 		->where('created_at', '<=', $end)
 		->groupBy('date')
@@ -304,7 +307,7 @@ class AdminController extends Controller
 		if($req->hasFile('image')){
 			$file = $req->file('image');
 			$duoi = $file->getClientOriginalExtension();
-			if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg')
+			if(/*$duoi != 'jpg' && */$duoi != 'png' && $duoi != 'jpeg')
 			{
 				return redirect()->back()->with('message', 'File ảnh không đúng định dạng');
 			}
@@ -378,6 +381,13 @@ class AdminController extends Controller
 
     // add table
 	public function getAddTable(Request $req){
+		$check = Table::where('code',  $req->code)
+						->where('delete_flag', 0)
+						->orWhere('table_name', $req->table_name)
+						->first();
+		if($check){
+			return redirect()->back()->with('error', 'Bàn đã tồn tại');
+		}
 		$table = new Table();
 		$table->table_name = $req->table_name;
 		$table->code = $req->code;
@@ -425,7 +435,17 @@ class AdminController extends Controller
 	}
 
 	public function getListBookTable(){
-		$bookTable = BookTable::orderBy('created_at', 'desc')->get();
+		// $bookTable = BookTable::orderBy('created_at', 'desc')->get();
+		$bookTable = DB::table('booktable')
+		->join('tables', 'booktable.id_table', '=', 'tables.id')
+		->join('customer', 'booktable.id_customer', '=', 'customer.id')
+		->where('tables.delete_flag','0')
+		->select('booktable.*','customer.name','customer.email','customer.phone', 'tables.table_name')
+		->get();
+		// $dem = '';
+		// $user = DB::select("CALL getCountUser('Phong', @dem)");
+		// $dem = DB::select('select @dem as dem');
+		// dd($dem[0]->dem);
 		return view('admin.table.booktable', compact('bookTable'));
 	}
 
@@ -458,6 +478,7 @@ class AdminController extends Controller
 	public function getListOrderReview(){
 		$order = Order::where('delete_flag', 0)
 						->where('status_staff', 0)
+						->orderBy('id', 'desc')
 						->orderBy('status', 'asc')
 						->orderBy('created_at', 'desc')->get();
 		return view('admin.order.list', compact('order'));
